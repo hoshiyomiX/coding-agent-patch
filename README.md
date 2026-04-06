@@ -82,7 +82,7 @@ Patches the built-in `fullstack-dev` skill's `SKILL.md` with a routing decision 
 
 ## Default `coding-agent` vs `coding-suisei`
 
-| Aspect | Default `coding-agent` (v1.0.4) | `coding-suisei` (v3.1.0) |
+| Aspect | Default `coding-agent` (v1.0.4) | `coding-suisei` (v3.2.0) |
 |--------|-------------------------------|--------------------------|
 | **Workflow** | Soft guidance: "Plan Before Code", "Verify Everything" | **4 mandatory quality gates** enforced as hard constraints (GATE 1→2→3→4) |
 | **Error Handling** | "Report error to user, suggest fixes, wait" | **Error Stop Protocol**: STOP immediately, diagnose root cause, fix root not symptom, re-verify |
@@ -184,7 +184,7 @@ Start the session with a web dev keyword to trigger `fullstack-dev`, then on sub
 ~/my-project/skills/
 ├── coding-suisei/                      # Deployed skill
 │   ├── SKILL.md                        # Core: quality gates + trigger confirmation
-│   │                                   #   version 3.1.0
+│   │                                   #   version 3.2.0
 │   ├── knowledge/                      # Tier 1 Knowledge Base
 │   │   ├── architecture.md             # z.ai sandbox constraints, directory layout,
 │   │   │                               #   service communication (Caddy gateway)
@@ -193,17 +193,15 @@ Start the session with a web dev keyword to trigger `fullstack-dev`, then on sub
 │   │   ├── gotchas.md                  # Platform quirks: single route, no localhost,
 │   │   │                               #   XTransformPort, skills/ persistence, Prisma limits
 │   │   └── error-patterns.md           # 15+ error→cause→fix entries organized by category
-│   │                                   #   (runtime, build/lint, React, WebSocket)
+│   │                                   #   (network, runtime, build, WebSocket) + debug flow
 │   ├── workflow/                       # Tier 1 Workflow Templates
 │   │   ├── gates.md                    # Hard constraints: function limits, type rules,
 │   │   │                               #   file rules, code smell ban list, import order
 │   │   ├── plan-template.md            # Structured plan: problem, approach, files,
 │   │   │                               #   dependencies, steps, risk assessment, verification
-│   │   └── review-checklist.md         # 6-category review: structure, type safety,
-│   │                                   #   error handling, security, performance, cleanliness
-│   ├── memory-template.md              # Template for ~/code/memory.md preferences
-│   ├── state.md                        # Multi-task request tracking
-│   ├── criteria.md                     # When to save/never save user preferences
+│   │   └── review-checklist.md         # Focused review: critical checks, structure,
+│   │                                   #   platform checks (web dev)
+│   ├── memory-template.md              # Template for ~/code/memory.md preferences + storage rules
 │   └── _migrated_from_coding_agent     # Migration marker (auto-created)
 │
 └── fullstack-dev/                      # Patched with routing wrapper
@@ -310,7 +308,8 @@ This is a **coding workflow standard** — a set of quality constraints injected
 
 | Version | Changes |
 |---------|---------|
-| **v3.1.0** | Fixed 3 critical bugs (wrong file mapping in GATE 2, dead references in memory-template, import order conflict). Added multi-language linter in GATE 3. Changed wrapper trigger to ⚡. Trimmed description frontmatter. Added delivery confirmation line. Removed duplicate sections from SKILL.md. Trimmed generic content from conventions.md and error-patterns.md. |
+| **v3.2.0** | Major token optimization (~30% reduction). Removed dead weight: Honest Description, Architecture/Core Rules bloat, duplicate checklists. Deleted criteria.md (merged into memory-template.md) and state.md (rarely used). Made GATE 2 smarter (read relevant files, not all 4). Added Honesty Clause acknowledging no enforcement. Slashed review-checklist from 24→12 items. Added more error patterns (CORS, Prisma unique constraint, case sensitivity). |
+| v3.1.0 | Fixed 3 critical bugs (wrong file mapping in GATE 2, dead references in memory-template, import order conflict). Added multi-language linter in GATE 3. Changed wrapper trigger to ⚡. Trimmed description frontmatter. Added delivery confirmation line. Removed duplicate sections from SKILL.md. Trimmed generic content from conventions.md and error-patterns.md. |
 | v3.0.0 | Renamed `coding-agent` → `coding-suisei`. Added Tier 1 upgrades: 4 mandatory quality gates, project knowledge base (4 files), error pattern library, workflow templates (plan + review + gates), trigger confirmation marker (☄️). Added `fullstack-dev` routing wrapper. |
 | v2.2 | Fixed repo structure (independent git), removed bootstrap `Invoke Skill()` instruction from setup.sh (was triggering LLM refusal). |
 | v2.0 | Initial `fullstack-dev` routing wrapper + `coding-agent` skill patch. |
@@ -347,7 +346,7 @@ rm -rf ~/my-project/skills/coding-suisei
 ```
 coding-suisei/
 ├── README.md                            # This file
-├── setup.sh                             # Idempotent install script (v3.1)
+├── setup.sh                             # Idempotent install script (v3.2)
 └── skill/
     ├── coding-suisei/
     │   ├── SKILL.md                     # Core skill definition (quality gates + trigger)
@@ -361,7 +360,5 @@ coding-suisei/
     │   │   ├── plan-template.md
     │   │   └── review-checklist.md
     │   ├── memory-template.md
-    │   ├── state.md
-    │   └── criteria.md
     └── fullstack-dev-SKILL.md           # Routing wrapper (patches fullstack-dev)
 ```

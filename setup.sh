@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================
-#  coding-suisei patch v3.1 — fullstack-dev wrapper + quality gates
+#  coding-suisei patch v3.2 — fullstack-dev wrapper + quality gates
 #
 #  What this does:
 #    1. Deploys coding-suisei skill (quality-gated coding workflow)
@@ -10,7 +10,7 @@
 #    3. Removes _meta.json if present
 #
 #  Usage:
-#    git clone https://github.com/hoshiyomiX/coding-agent-patch.git /tmp/cap
+#    git clone https://github.com/hoshiyomiX/coding-suisei.git /tmp/cap
 #    cd /tmp/cap && bash setup.sh
 #
 #  Trigger marker: ☄️
@@ -38,7 +38,7 @@ fail()  { echo -e "${RED}[FAIL]${NC}  $*"; }
 
 echo ""
 echo "============================================"
-echo "  coding-suisei patch v3.1"
+echo "  coding-suisei patch v3.2"
 echo "  Trigger marker: ☄️"
 echo "============================================"
 echo ""
@@ -84,7 +84,7 @@ for ref in gates.md plan-template.md review-checklist.md; do
 done
 
 # Reference files
-for ref in memory-template.md state.md criteria.md; do
+for ref in memory-template.md; do
     if [ -f "${SOURCE_DIR}/coding-suisei/${ref}" ]; then
         cp "${SOURCE_DIR}/coding-suisei/${ref}" "${SUISEI_DIR}/${ref}"
         ok "${ref}"
@@ -98,6 +98,14 @@ if [ -f "${SUISEI_DIR}/_meta.json" ]; then
 else
     ok "_meta.json not present"
 fi
+
+# Remove deprecated files from previous versions
+for deprecated in criteria.md state.md; do
+    if [ -f "${SUISEI_DIR}/${deprecated}" ]; then
+        rm -f "${SUISEI_DIR}/${deprecated}"
+        ok "${deprecated} removed (deprecated)"
+    fi
+done
 
 # ============================================================
 # PART 2: Patch fullstack-dev with routing wrapper
@@ -216,7 +224,7 @@ fi
 echo ""
 echo "============================================"
 if [ $ERRORS -eq 0 ]; then
-    echo -e "${GREEN}  ☄️ Patch v3.1 installed!${NC}"
+    echo -e "${GREEN}  ☄️ Patch v3.2 installed!${NC}"
     echo ""
     echo "  • coding-suisei -> skills/coding-suisei/ (with quality gates)"
     echo "  • fullstack-dev wrapper -> skills/fullstack-dev/"

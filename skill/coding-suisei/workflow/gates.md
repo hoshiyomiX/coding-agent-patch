@@ -46,15 +46,4 @@ These patterns are FORBIDDEN:
 
 ---
 
-## Gate Enforcement
-
-Before delivering any code, verify against this checklist:
-
-- [ ] No function exceeds 50 lines
-- [ ] No `any` type used
-- [ ] All functions have explicit return types
-- [ ] All error paths handled
-- [ ] No console.log statements
-- [ ] No circular imports
-- [ ] Imports ordered correctly
-- [ ] No magic numbers
+For delivery verification, run through `workflow/review-checklist.md`.

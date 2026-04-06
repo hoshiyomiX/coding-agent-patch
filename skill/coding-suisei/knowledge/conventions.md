@@ -1,25 +1,19 @@
 # Code Conventions — Platform-Specific
 
-This file covers conventions specific to the z.ai sandbox environment. Standard best practices (naming, basic TypeScript) are not repeated here.
+Standard best practices (PascalCase, camelCase, basic TypeScript) are NOT repeated here — the LLM already knows them. This file covers only conventions specific to the z.ai sandbox.
 
-## React Patterns
+## State Management Routing
 
-### 'use client' and 'use server'
-
-- Components using hooks → `'use client'`
-- Server-only functions → `'use server'`
-- Components with no hooks → can be server components (default)
-
-### State Management
-
-- Local UI state → `useState`
-- Shared client state → Zustand store
-- Server state → TanStack Query
-- Form state → React Hook Form + Zod validation
+| Need | Solution |
+|------|----------|
+| Local UI state | `useState` |
+| Shared client state | Zustand store (`/stores/`) |
+| Server state / data fetching | TanStack Query |
+| Form state | React Hook Form + Zod validation |
 
 ## Import Order
 
-Strict import ordering within every file:
+Strict ordering within every file:
 
 ```typescript
 // 1. React/Next.js
@@ -27,9 +21,8 @@ import { useState, useEffect } from 'react';
 
 // 2. External packages
 import { z } from 'zod';
-import { motion } from 'framer-motion';
 
-// 3. Internal packages (@/ paths)
+// 3. Internal (@/ paths)
 import { db } from '@/lib/db';
 import { Button } from '@/components/ui/button';
 
@@ -53,16 +46,9 @@ import type { User } from '@/types';
 // 7. Export
 ```
 
-## CSS/Styling
+## Platform-Specific Rules
 
-- Use Tailwind CSS utility classes
-- Use shadcn/ui components (they exist in `src/components/ui/`)
-- No custom CSS files unless absolutely necessary
-- Avoid indigo/blue colors unless user requests them
-- Always use responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`
-
-## TypeScript
-
-- Prefer `unknown` over `any` — narrow with type guards
-- Prefer interfaces for object shapes, types for unions
-- Use `import type` for type-only imports
+- **Styling**: Use shadcn/ui components from `src/components/ui/` — do NOT build from scratch
+- **Colors**: Avoid indigo/blue unless user explicitly requests
+- **TypeScript**: Use `unknown` over `any` — narrow with type guards. Use `import type` for type-only imports
+- **Server/Client split**: Hooks → `'use client'`, server-only logic → `'use server'`, no hooks → server component (default)

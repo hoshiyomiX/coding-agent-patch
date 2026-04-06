@@ -1,6 +1,6 @@
 ---
 name: coding-suisei
-version: 3.1.0
+version: 3.2.0
 description: "Quality-gated coding workflow with 4 mandatory gates, knowledge base, and error patterns. ☄️"
 ---
 
@@ -18,15 +18,6 @@ Failure to output ☄️ means the skill did not load properly.
 
 ---
 
-## What Is This (Honest Description)
-
-This is a **coding workflow standard** — a set of quality constraints injected into the LLM context when invoked. It is not an autonomous agent. It cannot execute code, make independent decisions, or persist memory on its own.
-
-What it DOES: forces the LLM to follow structured quality gates, load project knowledge, and avoid common mistakes.
-What it does NOT: execute code autonomously, access external services, modify its own files.
-
----
-
 ## QUALITY GATES (MANDATORY — READ BEFORE EVERY TASK)
 
 You MUST follow these gates in order. Do NOT skip any gate.
@@ -37,15 +28,22 @@ Before writing ANY code, you must demonstrate understanding:
 - Restate the problem in your own words
 - Identify edge cases and constraints
 - List files that will be created or modified
-- If the task is complex, create a plan (see `workflow/plan-template.md`)
+- Read `~/code/memory.md` for user preferences if it exists
+- If the task is complex (3+ files, schema change, new endpoint), create a plan (see `workflow/plan-template.md`)
 
 ### GATE 2: Write with Constraints
 
-While writing code, you MUST follow:
-- Read `workflow/gates.md` for mandatory coding constraints
-- Read `knowledge/conventions.md` for platform-specific conventions (state management, styling, component patterns)
-- Read `knowledge/gotchas.md` for sandbox-specific quirks (localhost, XTransformPort, single route)
-- Read `knowledge/error-patterns.md` for debugging known errors
+Read relevant knowledge files based on task type. You do NOT need to read all files for every task.
+
+| Task Type | Read These Files |
+|-----------|-----------------|
+| Any coding task | `workflow/gates.md` (mandatory) |
+| Web dev (Next.js/React) | `knowledge/conventions.md` + `knowledge/gotchas.md` |
+| Debugging / errors | `knowledge/error-patterns.md` + `knowledge/gotchas.md` |
+| New feature / project change | `knowledge/architecture.md` |
+| Before delivery | `workflow/review-checklist.md` |
+
+While writing code:
 - Each function must have a clear single responsibility
 - Each function must include error handling
 
@@ -59,7 +57,7 @@ Before delivering, you MUST:
 - Check for type errors
 - Trace through the code mentally with sample inputs
 - If tests exist, run them
-- Read `workflow/review-checklist.md` for the full review checklist
+- Run through `workflow/review-checklist.md`
 
 ### GATE 4: Error Stop Protocol
 
@@ -81,70 +79,14 @@ Use ✗ if a gate was skipped, N/A if not applicable (e.g., G4 N/A when no error
 
 ---
 
-## Reference Files
+## Honesty Clause
 
-### Knowledge Base
-
-| File | When to Read |
-|------|-------------|
-| `knowledge/architecture.md` | Starting a new feature or modifying project structure |
-| `knowledge/conventions.md` | Writing code — state management, styling, component patterns |
-| `knowledge/gotchas.md` | Working with sandbox environment or platform APIs |
-| `knowledge/error-patterns.md` | Debugging errors or unexpected behavior |
-
-### Workflow Templates
-
-| File | When to Use |
-|------|-------------|
-| `workflow/gates.md` | Every coding task (mandatory constraints) |
-| `workflow/plan-template.md` | Complex tasks requiring step-by-step planning |
-| `workflow/review-checklist.md` | Before delivering any code |
-
-### Support Files
-
-| File | Purpose |
-|------|---------|
-| `memory-template.md` | Template for `~/code/memory.md` |
-| `state.md` | Multi-task request tracking |
-| `criteria.md` | When to save/never save user preferences |
+This skill is **text instructions** injected into your context. It cannot physically force compliance. The gates work because you choose to follow them. If you skip a gate, the delivery confirmation above becomes meaningless — do not output it unless you actually followed the gates.
 
 ---
 
-## Architecture
+## Scope Boundaries
 
-User preferences stored in `~/code/` when user explicitly requests.
-
-```
-~/code/
-  - memory.md    # User-provided preferences only
-```
-
-Create on first use: `mkdir -p ~/code`
-
----
-
-## Core Rules
-
-### 1. Check Memory First
-Read `~/code/memory.md` for user's stated preferences if it exists.
-
-### 2. User Controls Execution
-- This skill provides GUIDANCE and CONSTRAINTS, not autonomous execution
-- User decides when to proceed to next step
-- Sub-agent delegation requires user's explicit request
-
-### 3. Follow the Gates (GATE 1 → 2 → 3 → 4)
-Never skip a gate. Never rush to code without understanding.
-
-### 4. Store Preferences on Request
-| User says | Action |
-|-----------|--------|
-| "Remember I prefer X" | Add to memory.md |
-| "Never do Y again" | Add to memory.md Never section |
-
-Only store what user explicitly asks to save.
-
-### 5. Scope Boundaries
 This skill NEVER:
 - Executes code automatically
 - Makes network requests

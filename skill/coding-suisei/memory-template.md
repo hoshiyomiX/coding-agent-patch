@@ -1,8 +1,7 @@
-# Memory Setup - Code
+# Memory Setup
 
 ## Initial Setup
 
-Create directory on first use:
 ```bash
 mkdir -p ~/code
 touch ~/code/memory.md
@@ -16,11 +15,11 @@ Copy to `~/code/memory.md`:
 # Code Memory
 
 ## Preferences
-<!-- User's coding workflow preferences. Format: "preference" -->
+<!-- User's coding workflow preferences -->
 <!-- Examples: always run tests, prefer TypeScript, commit after each feature -->
 
 ## Never
-<!-- Things that don't work for this user. Format: "thing to avoid" -->
+<!-- Things that don't work for this user -->
 <!-- Examples: inline styles, console.log debugging, large PRs -->
 
 ## Patterns
@@ -31,9 +30,9 @@ Copy to `~/code/memory.md`:
 Last updated: YYYY-MM-DD
 ```
 
-## Notes
+## Storage Rules
 
-- Check `criteria.md` for additional user-specific criteria
-- Use `workflow/plan-template.md` for structured planning
-- Use `workflow/review-checklist.md` for verification checklist
-- Use `workflow/gates.md` for mandatory coding constraints
+- **Only save** when user explicitly asks ("Remember I prefer X", "Always do Y")
+- **Don't save** one-off requests, project-specific requirements, or temporary preferences
+- **Ask before saving**: "Should I remember this preference?"
+- **Only modify** `~/code/memory.md` — never modify skill files
