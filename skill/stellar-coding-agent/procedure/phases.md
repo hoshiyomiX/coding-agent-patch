@@ -26,7 +26,7 @@ The diagram shows one error-return path: any phase that encounters an error docu
    - **Simple**: Single file, no schema change, no new dependencies, no architectural impact.
    - **Standard**: Multiple files or a schema change, but within existing patterns.
    - **Complex**: New endpoints, architectural changes, multi-service coordination, or high risk.
-3. Read `~/code/memory.md` for user preferences, if the file exists.
+3. Check `/home/z/my-project/skills/stellar-coding-agent/memory.md` for user preferences, if the file exists.
 4. Transition to SPECIFY.
 
 **Required artifacts**: None. IDLE is a routing phase.

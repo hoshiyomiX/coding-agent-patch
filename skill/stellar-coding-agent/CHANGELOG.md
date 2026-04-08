@@ -1,5 +1,19 @@
 # Changelog
 
+## [4.3.1] — 2026-04-08
+
+### Fixed
+- Bare `dev.log` path in error-resolution.md — now uses absolute `/home/z/my-project/dev.log`
+- Dead `~/code/memory.md` reference in phases.md — now points to `skills/stellar-coding-agent/memory.md`
+- Banner template count corrected from 5 to 4 (problem-spec, implementation-plan, verification-report, incident-report)
+
+### Added
+- Version sync comment in SKILL.md frontmatter — reminds maintainers to update 3 locations on bump
+- Honesty note in QA Attestation section — acknowledges attestation is self-graded, sets correct expectations
+
+### Why
+The bare `dev.log` path could resolve incorrectly if the working directory changed mid-session. The `~/code/memory.md` path was a stale reference from before the framework moved to `skills/`. The template count was cosmetically wrong. The version sync comment prevents the recurring issue of mismatched version numbers across frontmatter, banner, and setup.sh. The honesty note documents the inherent limitation that the LLM grades its own work.
+
 ## [4.3.0] — 2026-04-08
 
 ### Changed

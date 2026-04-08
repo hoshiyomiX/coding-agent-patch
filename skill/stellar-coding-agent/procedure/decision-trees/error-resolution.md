@@ -15,7 +15,7 @@ When any error is detected, stop all work and complete these actions before atte
 **Actions:**
 1. Record the exact error message — paste it verbatim, do not summarize.
 2. Record the stack trace if one is available.
-3. Check `dev.log` for additional context — read the file directly to inspect recent errors and server output.
+3. Check `/home/z/my-project/dev.log` for additional context — read the file directly to inspect recent errors and server output.
 4. Record what the agent was doing when the error occurred (which phase, which Traceability ID, which command).
 5. Open the incident report template (`procedure/templates/incident-report.md`) and fill in the "Error Capture" section.
 

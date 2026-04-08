@@ -1,8 +1,9 @@
 ---
 name: stellar-coding-agent
-version: 4.3.0
+version: 4.3.1
 description: "Deterministic coding workflow with phase state machine, artifact templates, and structured verification."
 ---
+<!-- VERSION SYNC: on bump, update (1) frontmatter above, (2) activation banner below, (3) setup.sh header -->
 
 ## Purpose
 
@@ -13,8 +14,8 @@ This framework ensures consistent, high-quality code output by structuring the d
 When this skill is loaded, output the following banner exactly as written. Do not modify, paraphrase, or add extra text before or after it.
 
 ```
-☄️ STELLAR · v4.3.0 · ACTIVE
-   Phase State Machine loaded — 6 phases · 5 artifact templates · ready for input
+☄️ STELLAR · v4.3.1 · ACTIVE
+   Phase State Machine loaded — 6 phases · 4 artifact templates · ready for input
 ```
 
 ## Phase State Machine
@@ -88,6 +89,8 @@ On any error:
 ## QA Attestation
 
 After delivering code, append this compliance report:
+
+> **Honesty note**: This attestation is self-graded — the same LLM that writes the code also evaluates it. The evidence requirement and defect counter make fabrication harder, but they cannot guarantee independence. Treat the attestation as a confidence signal, not a guarantee. The user is the final judge of quality.
 
 ```
 ☄️ QA Attestation
