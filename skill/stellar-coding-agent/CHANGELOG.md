@@ -1,5 +1,20 @@
 # Changelog
 
+## [4.3.0] — 2026-04-08
+
+### Changed
+- QA Attestation replaced `ERROR STOP` row with `OUTCOME` row — a separate gate for code correctness
+- Added mandatory `Evidence` line requiring concrete counts (e.g. `lint 0 errors, 4/4 traceability verified`)
+- Added mandatory `Defects found and fixed` counter
+- Added delivery gate rule: OUTCOME FAIL blocks delivery regardless of process phase status
+- Verification report template: added `Defects found/fixed` metrics to Summary, added `Outcome Statement` section
+- Verification report guidance: added rules for defect count consistency and outcome vs process distinction
+- setup.sh version bumped to v4.3.0
+- SKILL.md version bumped to v4.3.0
+
+### Why
+The old attestation measured process compliance ("did I write a spec?") not outcome quality ("does the code work?"). The LLM would stamp all phases PASS even when code had real bugs, because it followed the process — just followed it badly. The OUTCOME row decouples correctness from process, and the evidence requirement makes false claims harder to fabricate.
+
 ## [4.2.1] — 2026-04-08
 
 ### Changed

@@ -61,7 +61,13 @@ Copy and complete the following after the IMPLEMENT phase:
 | Traceability items passed | [n] |
 | Total edge cases verified | [n] |
 | Edge cases passed | [n] |
+| Defects found during verification | [n] |
+| Defects fixed before attestation | [n] |
 | Overall result | PASS / FAIL |
+
+## Outcome Statement
+
+[In 1-2 sentences, state whether the code satisfies all requirements from the problem specification. If defects were found and fixed, describe them here. If the overall result is FAIL, explain what failed and why delivery is blocked.]
 
 ## Failures (if any)
 
@@ -79,6 +85,8 @@ Copy and complete the following after the IMPLEMENT phase:
 | **Edge Case Verification** | Use concrete test inputs, not abstract descriptions. "Empty array" is abstract — `items = []` is concrete. |
 | **Review Checklist** | Adapt the checklist to the language and framework. Items marked N/A should still appear in the table — they are excluded from the pass/fail count. |
 | **Failures** | If a check fails, do not proceed to DELIVER. Document the failure, fix it, and re-run verification. The incident report template at `procedure/templates/incident-report.md` may be used for significant failures. |
+| **Defects found/fixed** | These two numbers must match unless there are unresolved defects. If defects found > defects fixed, the overall result must be FAIL and delivery is blocked. |
+| **Outcome Statement** | This is the single source of truth for the QA Attestation OUTCOME row. It must be a specific claim about the code, not a process description. "Code satisfies all 4 requirements" is valid. "Verification was performed" is not — that's a process claim, not an outcome claim. |
 
 ---
 

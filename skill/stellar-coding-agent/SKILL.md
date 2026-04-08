@@ -1,6 +1,6 @@
 ---
 name: stellar-coding-agent
-version: 4.2.1
+version: 4.3.0
 description: "Deterministic coding workflow with phase state machine, artifact templates, and structured verification."
 ---
 
@@ -13,7 +13,7 @@ This framework ensures consistent, high-quality code output by structuring the d
 When this skill is loaded, output the following banner exactly as written. Do not modify, paraphrase, or add extra text before or after it.
 
 ```
-☄️ STELLAR · v4.2.1 · ACTIVE
+☄️ STELLAR · v4.3.0 · ACTIVE
    Phase State Machine loaded — 6 phases · 5 artifact templates · ready for input
 ```
 
@@ -95,11 +95,19 @@ After delivering code, append this compliance report:
 ├─ PLAN        : PASS
 ├─ IMPLEMENT   : PASS
 ├─ VERIFY      : PASS
-└─ ERROR STOP  : N/A
+└─ OUTCOME     : PASS
+
+Evidence: [must cite concrete results from verification report]
+Defects found and fixed: [n]
 ```
 
-Status values: `PASS` (fully completed), `FAIL` (skipped or incomplete), `N/A` (not applicable).
-Output this only when all applicable phases were actually completed.
+**Evidence requirement**: The evidence line must contain specific counts from the verification report — for example `lint 0 errors, tsc 0 errors, 4/4 traceability verified, 3/3 edge cases confirmed`. Writing "looks good" or "all checks passed" without citing numbers is not valid evidence.
+
+**Defects found**: If bugs were found during VERIFY and fixed, this number must reflect the actual count. A claim of 0 defects means the implementation was correct on the first attempt.
+
+**Status values**: `PASS` (completed with evidence), `FAIL` (failed or incomplete), `N/A` (not applicable for this task).
+
+**Delivery gate**: If OUTCOME is FAIL, do not deliver. Return to the appropriate phase, fix the issue, and re-verify. Process phases (SPECIFY/PLAN/IMPLEMENT/VERIFY) may all be PASS while OUTCOME is FAIL — this means the process was followed but the code still has problems.
 
 ## Scope
 
