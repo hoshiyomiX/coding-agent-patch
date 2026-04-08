@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.2.0] — 2026-04-08
+
+### Changed
+- Activation trigger redesigned from bare `☄️` to a styled banner with version, phase count, and status
+- QA Attestation header now includes `☄️` prefix for visual consistency with activation
+- Phase labels in QA Attestation changed from `G1`/`G2` notation to plain names (`SPECIFY`, `PLAN`, etc.)
+- setup.sh version bumped to v4.2.0
+
+### Why
+The bare `☄️` emoji as the only activation output looked plain and lacked informational value. The new banner provides instant visibility of framework version, loaded component count, and ready state — making it functionally useful while remaining compact.
+
 ## [4.1.0] — 2026-04-08
 
 ### Changed
