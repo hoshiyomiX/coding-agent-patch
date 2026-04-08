@@ -38,6 +38,7 @@ Use the error message and context to classify the error into one of the categori
 | **Runtime** | `TypeError`, `ReferenceError`, `Cannot read properties of undefined`, function crashes | `knowledge/error-patterns.md` (runtime error patterns) |
 | **Network / Gateway** | `ECONNREFUSED`, `fetch failed`, `502 Bad Gateway`, CORS error, WebSocket failure | `knowledge/error-patterns.md` (network/gateway section), `knowledge/architecture.md` (service communication) |
 | **Database / Prisma** | Prisma error, `Unique constraint failed`, `PrismaClient not generated`, query error | `knowledge/error-patterns.md` (database section) |
+| **Git / Version Control** | `push rejected`, `fetch failed`, `merge conflict`, `diverged branches`, `non-fast-forward`, `detached HEAD` | This section (see Git diagnostic path below) |
 | **Other** | Error does not match any category above | Isolate minimal reproduction (see below) |
 
 ### Diagnostic Paths by Category
@@ -73,6 +74,29 @@ Use the error message and context to classify the error into one of the categori
 2. For unique constraint violations, use `upsert` or check existence with `findFirst` before inserting.
 3. Check that query conditions match the schema field names exactly.
 4. Verify the Prisma client import path is correct.
+
+**Git / Version Control:**
+
+> **Critical rule**: Never run `git pull`, `git rebase`, `git reset`, `git push --force`, or any destructive git operation without first running `git fetch` and inspecting the state. If remote has diverged from local, **stop and ask the user** — do not attempt automatic resolution. The infrastructure may block git operations, and cascading git commands can leave the agent completely paralyzed.
+
+1. **On `git push` rejected (remote has diverged):**
+   a. Run `git fetch origin` to see what changed on the remote.
+   b. Run `git log HEAD..origin/main --oneline` (or the appropriate branch) to inspect the divergent commits.
+   c. Present the situation to the user: "Remote has N commits ahead of local. [Summarize what changed]. How would you like to proceed?"
+   d. **Do NOT** run `git pull`, `git rebase`, or `git merge` without explicit user instruction.
+   e. If the user asks you to resolve it, follow their specific instruction. If they say "rebase", confirm before executing.
+2. **On merge conflict during any operation:**
+   a. Do NOT run `git rebase --abort`, `git merge --abort`, or `git reset --hard` without user approval.
+   b. Present the conflicting files to the user and ask how to resolve each conflict.
+   c. If git commands are being blocked by infrastructure, inform the user immediately — do not attempt alternative commands.
+3. **On `git push --force` consideration:**
+   a. Force push is almost never appropriate in collaborative repositories.
+   b. If the user requests it, warn them about the consequences (overwriting remote history).
+   c. Do not suggest force push as a resolution option unless the user explicitly asks for it.
+4. **On git operations being blocked by infrastructure:**
+   a. Stop all git operations immediately.
+   b. Inform the user that the infrastructure is blocking git commands and that manual intervention is required.
+   c. Do NOT attempt alternative escalation commands (`rm -rf .git`, `git checkout --theirs`, etc.).
 
 **Other:**
 1. Isolate a minimal reproduction — reduce the failing code to the smallest possible case that still produces the error.

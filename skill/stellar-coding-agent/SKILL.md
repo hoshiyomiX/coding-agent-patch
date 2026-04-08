@@ -1,6 +1,6 @@
 ---
 name: stellar-coding-agent
-version: 4.3.1
+version: 4.4.0
 description: "Deterministic coding workflow with phase state machine, artifact templates, and structured verification."
 ---
 <!-- VERSION SYNC: on bump, update (1) frontmatter above, (2) activation banner below, (3) setup.sh header -->
@@ -14,7 +14,7 @@ This framework ensures consistent, high-quality code output by structuring the d
 When this skill is loaded, output the following banner exactly as written. Do not modify, paraphrase, or add extra text before or after it.
 
 ```
-☄️ STELLAR · v4.3.1 · ACTIVE
+☄️ STELLAR · v4.4.0 · ACTIVE
    Phase State Machine loaded — 6 phases · 4 artifact templates · ready for input
 ```
 
@@ -85,6 +85,13 @@ On any error:
 3. Ask the user before any recovery action with side effects (git changes, file deletions, destructive operations)
 4. Fix root cause, not symptom
 5. Return to VERIFY phase and complete verification report
+
+**Git operation rules** (mandatory — overrides general error recovery):
+
+- Never run `git pull` without first running `git fetch` and inspecting the diff. If remote has diverged, stop and ask the user.
+- Never run `git rebase`, `git reset`, `git push --force`, or `git merge` without explicit user instruction.
+- If any git command is blocked by infrastructure, stop all git operations and inform the user. Do not attempt alternative escalation commands.
+- See `procedure/decision-trees/error-resolution.md` (Git / Version Control section) for the full decision tree.
 
 ## QA Attestation
 
