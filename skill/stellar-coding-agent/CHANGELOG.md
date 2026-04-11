@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.4.2] — 2026-04-11
+
+### Changed
+- Removed non-coding task exemption from Activation section — QA Attestation is now required after every task, not just coding tasks
+- Non-coding tasks (conversation, questions, feedback) mark phases as N/A but still output the attestation block
+- QA Attestation header changed from "After delivering code" to "After completing any task (coding or non-coding)"
+
+### Why
+The Activation section had an escape hatch: "If the user's request is not a coding task, the phase machine does not apply." This allowed the agent to skip the QA Attestation entirely on non-coding tasks — the exact failure mode the user wanted to detect. The QA Attestation is the framework's proof-of-life signal. If it's optional, the user has no way to confirm the agent is following the framework. Making it mandatory for all tasks means the user can always check: no attestation block = framework was not followed.
+
 ## [4.4.1] — 2026-04-11
 
 ### Changed

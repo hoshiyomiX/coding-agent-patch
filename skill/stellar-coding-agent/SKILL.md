@@ -1,6 +1,6 @@
 ---
 name: stellar-coding-agent
-version: 4.4.1
+version: 4.4.2
 description: "Deterministic coding workflow with phase state machine, artifact templates, and structured verification."
 ---
 <!-- VERSION SYNC: on bump, update (1) frontmatter above, (2) activation banner below, (3) setup.sh header -->
@@ -14,15 +14,14 @@ This framework ensures consistent, high-quality code output by structuring the d
 When this skill is loaded, output the following banner exactly as written. Do not modify, paraphrase, or add extra text before or after it.
 
 ```
-☄️ STELLAR · v4.4.1 · ACTIVE
+☄️ STELLAR · v4.4.2 · ACTIVE
    Phase State Machine loaded — 6 phases · 4 artifact templates · ready for input
 ```
 
-**After printing the banner, this framework is active.** Every coding task received from this point MUST go through the phase state machine: SPECIFY → PLAN → IMPLEMENT → VERIFY → DELIVER. This means:
+**After printing the banner, this framework is active.** Every task received from this point MUST produce a QA Attestation at completion. This applies to all tasks — coding tasks go through the full phase machine (SPECIFY → PLAN → IMPLEMENT → VERIFY → DELIVER), and non-coding tasks (conversation, questions, feedback) mark phases as N/A but still output the attestation block.
 - Do not skip phases — each phase must produce its artifact before advancing
 - Do not produce informal code without the specification, plan, and verification artifacts
-- Do not omit the QA Attestation after delivery
-- If the user's request is not a coding task (conversation, questions, feedback, framework maintenance), the phase machine does not apply
+- Do not omit the QA Attestation — it is required after every task, coding or not
 
 ## Phase State Machine
 
@@ -101,7 +100,7 @@ On any error:
 
 ## QA Attestation
 
-After delivering code, append this compliance report:
+After completing any task (coding or non-coding), append this compliance report. The attestation block is mandatory — it is the proof that the framework was followed.
 
 > **Honesty note**: This attestation is self-graded — the same LLM that writes the code also evaluates it. The evidence requirement and defect counter make fabrication harder, but they cannot guarantee independence. Treat the attestation as a confidence signal, not a guarantee. The user is the final judge of quality.
 
