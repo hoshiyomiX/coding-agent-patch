@@ -109,6 +109,19 @@ For the structured error resolution workflow, see `procedure/decision-trees/erro
 
 ---
 
+## Source Data Integrity
+
+### Stale Local Data / Local-Remote Divergence [CRITICAL]
+
+| Context | Cause | Fix |
+|---------|-------|-----|
+| Analyzing code that was modified in a previous session or by another contributor | Local clone not synchronized with remote before analysis began | Run `git fetch && git log origin/<branch> --oneline` to verify local matches remote. If behind, `git pull` or `git checkout <branch>` |
+| Making claims about commit history, branch state, or code presence | Checked local refs only without verifying against remote | Always verify against `origin/<branch>` for any claim about what is or is not in the repository |
+| Cross-session task where previous session pushed commits | Context compression summary does not carry forward exact git state | Perform Source State Verification as first action in SPECIFY |
+| QA Attestation evidence based on file reads from stale checkout | Evidence is technically accurate (files were read) but fundamentally misleading (wrong version) | Evidence must include source state verification for any git-backed analysis task |
+
+---
+
 ## Debug Flow
 
 When encountering an error, follow this sequence:

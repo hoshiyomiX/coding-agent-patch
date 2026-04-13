@@ -24,6 +24,7 @@ Copy and complete the following for every task:
 | Affected Files | [See table below] |
 | Risk Level | [LOW / MEDIUM / HIGH with justification] |
 | Dependencies | [External packages, services, config changes needed] |
+| Source State | [Branch name, HEAD commit SHA, and verification status. Example: "renuked @ 3283d1f (verified via git fetch, local matches remote)" or "No git repository involved"] |
 
 ## Affected Files
 
@@ -57,6 +58,7 @@ Copy and complete the following for every task:
 | **Affected Files** | Every file that will be created or modified must be listed. The action column uses "Create" for new files and "Modify" for existing files. |
 | **Risk Level** | LOW = single file, well-understood pattern. MEDIUM = multiple files or minor uncertainty. HIGH = schema changes, architectural impact, or significant uncertainty. Justify the rating. |
 | **Dependencies** | Include packages to install, services that must be running, and configuration changes. If none, write "None." |
+| **Source State** | If the task involves a git repository, record the branch and HEAD SHA after running Source State Verification (see SKILL.md). This creates an immutable reference point for the analysis. If no git repository is involved, write "No git repository involved." |
 
 ---
 

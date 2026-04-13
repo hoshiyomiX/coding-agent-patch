@@ -27,6 +27,7 @@ The diagram shows one error-return path: any phase that encounters an error docu
    - **Standard**: Multiple files or a schema change, but within existing patterns.
    - **Complex**: New endpoints, architectural changes, multi-service coordination, or high risk.
 3. Check `/home/z/my-project/skills/stellar-coding-agent/memory.md` for user preferences, if the file exists.
+3.5. If the task involves a git repository and the session was continued from a previous conversation (context compression boundary), flag the repository as "state-uncertain" and require Source State Verification in SPECIFY before proceeding to analysis.
 4. Transition to SPECIFY.
 
 **Required artifacts**: None. IDLE is a routing phase.
@@ -47,6 +48,7 @@ The diagram shows one error-return path: any phase that encounters an error docu
 **Entry criteria**:
 - Task complexity is classified (from IDLE).
 - User preferences are loaded, if available.
+- Source state is verified (if task involves a git repository — see SSV in SKILL.md).
 
 **Required actions**:
 1. Restate the user's request in precise technical terms.
@@ -56,6 +58,7 @@ The diagram shows one error-return path: any phase that encounters an error docu
 5. List all files that will be created or modified, with the action type (create/modify) and purpose for each.
 6. Assess risk level (LOW / MEDIUM / HIGH) with justification.
 7. Identify dependencies — external packages, services, configuration changes.
+7.5. If the task involves a git repository, perform Source State Verification (see SKILL.md): run git fetch, compare local HEAD against remote, sync if behind, record the verified state.
 8. Fill out the problem specification template and present it to the user.
 
 **Required artifacts**:
@@ -151,6 +154,7 @@ The diagram shows one error-return path: any phase that encounters an error docu
    a. Lint the project (`bun run lint` for TypeScript/Next.js, or the appropriate linter for the language).
    b. Check for type errors.
    c. Run existing tests, if any.
+1b. If the task involved analyzing existing code from a git repository, verify that the analyzed files matched the remote branch state at the time of analysis. If a discrepancy is found, return to SPECIFY with the corrected state.
 2. Perform traceability verification — confirm that every Traceability ID from the plan has a corresponding implementation that can be verified.
 3. Verify each edge case identified in the problem specification:
    a. Provide the test input.

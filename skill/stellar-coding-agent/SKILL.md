@@ -1,6 +1,6 @@
 ---
 name: stellar-coding-agent
-version: 4.5.0
+version: 4.6.0
 description: "Deterministic coding workflow with phase state machine, artifact templates, and structured verification."
 ---
 <!-- VERSION SYNC: on bump, update (1) frontmatter above, (2) activation banner below, (3) setup.sh header -->
@@ -14,7 +14,7 @@ This framework ensures consistent, high-quality code output by structuring the d
 When this skill is loaded, output the following banner exactly as written. Do not modify, paraphrase, or add extra text before or after it.
 
 ```
-☄️ STELLAR · v4.5.0 · ACTIVE
+☄️ STELLAR · v4.6.0 · ACTIVE
    Phase State Machine loaded — 6 phases · 4 artifact templates · ready for input
 ```
 
@@ -91,6 +91,27 @@ While writing code:
 - When fullstack-dev is active, defer technology-specific decisions (directives, SDK usage, component selection) to it — see "Coexistence with fullstack-dev" above
 - When fullstack-dev is NOT active, apply general rules: `'use client'` / `'use server'` directives correctly, SDK (`z-ai-web-dev-sdk`) in backend only
 
+## Source State Verification (SSV)
+
+Before performing any analysis, audit, or verification task on a git repository, the agent MUST execute Source State Verification:
+
+1. Run `git fetch` to synchronize remote references.
+2. Compare local HEAD against the relevant remote branch (`origin/<branch>`).
+3. If local is behind remote, run `git pull` (or `git checkout <branch>` after fetch) to sync.
+4. If the task references a specific commit, verify that commit exists in the current history (`git log --oneline | grep <commit-sha>`).
+5. Only after SSV passes may the analysis/audit proceed.
+
+SSV is mandatory when:
+- The task follows a cross-session boundary (context compression)
+- The task involves verifying the state of code, commits, or branch history
+- The task references specific commits, branches, or git operations from a previous session
+- Any previous session involved git push, commit, or branch operations
+
+SSV may be skipped when:
+- The agent is the sole actor and no git operations occurred in the session
+- The task is purely creative (creating new files with no reference to existing code)
+- The user explicitly states the current local state is correct
+
 ## Verification
 
 Before delivery, complete the verification report (`procedure/templates/verification-report.md`):
@@ -99,6 +120,7 @@ Before delivery, complete the verification report (`procedure/templates/verifica
 - Verify all Traceability IDs are implemented
 - Verify all edge cases from problem specification
 - Trace through code mentally with sample inputs
+- For analysis/audit tasks: verify source data matches authoritative source (see SSV above)
 
 ## Error Recovery
 
@@ -136,6 +158,11 @@ Defects found and fixed: [n]
 ```
 
 **Evidence requirement**: The evidence line must contain specific counts from the verification report — for example `lint 0 errors, tsc 0 errors, 4/4 traceability verified, 3/3 edge cases confirmed`. Writing "looks good" or "all checks passed" without citing numbers is not valid evidence.
+
+**Evidence tiers**:
+- Code-creation tasks: `lint 0 errors, tsc 0 errors, 4/4 traceability verified`
+- Code-analysis/audit tasks: `source state verified (<branch> @ <sha> matches origin), N files analyzed, M findings traced to line numbers`
+- If evidence for an analysis/audit task does not include source state verification, the attestation is incomplete and OUTCOME must be FAIL.
 
 **Defects found**: If bugs were found during VERIFY and fixed, this number must reflect the actual count. A claim of 0 defects means the implementation was correct on the first attempt.
 

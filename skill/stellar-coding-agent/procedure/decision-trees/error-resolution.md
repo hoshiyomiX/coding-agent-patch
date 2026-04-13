@@ -97,6 +97,13 @@ Use the error message and context to classify the error into one of the categori
    a. Stop all git operations immediately.
    b. Inform the user that the infrastructure is blocking git commands and that manual intervention is required.
    c. Do NOT attempt alternative escalation commands (`rm -rf .git`, `git checkout --theirs`, etc.).
+5. **On stale-data analysis detected (during or after verification):**
+   a. Run `git fetch origin && git log HEAD..origin/<branch> --oneline` to identify missed commits.
+   b. Run `git pull` (or `git checkout <branch>` after fetch) to synchronize.
+   c. Re-read all affected files from the updated working tree.
+   d. Re-perform the analysis on the current files.
+   e. If the analysis output was already delivered to the user, issue a correction immediately with the updated findings.
+   f. Return to VERIFY phase and complete a new verification report reflecting the corrected state.
 
 **Other:**
 1. Isolate a minimal reproduction — reduce the failing code to the smallest possible case that still produces the error.

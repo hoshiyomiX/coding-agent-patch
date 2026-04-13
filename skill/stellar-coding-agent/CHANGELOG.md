@@ -1,5 +1,25 @@
 # Changelog
 
+## [4.6.0] — 2026-04-13
+
+### Added
+- Source State Verification (SSV) — new section in SKILL.md mandating git fetch + comparison before any analysis/audit task on git repositories
+- Source State field in problem-spec template — records branch, HEAD SHA, and verification status
+- Source integrity check in verification-report Review Checklist
+- Stale Local Data error pattern in error-patterns.md ([CRITICAL] severity)
+- Stale-data recovery path (#5) in error-resolution decision tree Git section
+- Cross-session git state awareness flag in IDLE phase (action 3.5)
+- Evidence tiers in QA Attestation — code-creation vs code-analysis/audit tasks have different evidence requirements; analysis tasks must include source state verification
+
+### Changed
+- SPECIFY phase: entry criteria now includes source state verification; action 7.5 added for SSV
+- VERIFY phase: action 1b added for source integrity check on analysis tasks
+- IDLE phase: action 3.5 added for cross-session git state uncertainty flag
+- Version bumped to v4.6.0
+
+### Why
+A stale local git clone caused a false-negative audit — the agent analyzed outdated files, claimed 20 applied fixes were absent, and delivered a confidently incorrect report. The framework had no mechanism to verify data freshness before analysis. SSV closes this gap at every level: SKILL.md (mandate), SPECIFY (gate), VERIFY (defense-in-depth), templates (record), knowledge base (pattern recognition), and decision tree (recovery path).
+
 ## [4.5.0] — 2026-04-12
 
 ### Added

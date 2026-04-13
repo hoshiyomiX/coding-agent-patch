@@ -50,6 +50,7 @@ Copy and complete the following after the IMPLEMENT phase:
 | Single responsibility per function | PASS / FAIL / N/A |
 | No function exceeds 50 lines | PASS / FAIL / N/A |
 | Imports ordered correctly | PASS / FAIL / N/A |
+| Source data verified against authoritative source (remote/origin) | PASS / FAIL / N/A |
 
 ## Summary
 
