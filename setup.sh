@@ -2,8 +2,7 @@
 # ============================================================
 #  stellar-coding-agent v5.0.0
 #
-#  Install:  git clone https://github.com/hoshiyomiX/stellar-coding-agent.git /tmp/cap
-#            cd /tmp/cap && bash setup.sh
+#  Install:  cd ~/my-project && bash setup.sh
 #  Invoke:   Skill(command="stellar-coding-agent")
 #  Marker:   ☄️
 # ============================================================
@@ -32,7 +31,7 @@ echo ""
 
 if [ ! -f "${SOURCE_DIR}/SKILL.md" ]; then
     fail "Source files not found in ${SOURCE_DIR}/"
-    echo "  Make sure you cloned the full repo."
+    echo "  Make sure setup.sh is run from the repo root."
     exit 1
 fi
 

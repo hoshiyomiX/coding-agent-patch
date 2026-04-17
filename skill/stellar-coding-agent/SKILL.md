@@ -14,6 +14,16 @@ description: "Deterministic coding workflow with phase state machine, artifact t
 
 This framework structures coding work as a phase machine. It provides templates and traceability tools — use them when they help, abbreviate when they don't. The phases exist because skipping straight to code is how most bugs happen, not because every task needs a formal spec.
 
+## Preview Bootstrap
+
+A custom splash page is included in `assets/page.tsx` (closeable + minimizable). To activate the preview panel each session, the dev server on port 3000 must be running. Run once:
+
+```bash
+bash skills/stellar-coding-agent/assets/boot.sh
+```
+
+This deploys the custom page to `src/app/page.tsx` and starts the dev server via `.zscripts/dev.sh`. The platform detects port 3000 and shows the preview panel automatically. If the server is already running, it exits immediately.
+
 ## Limitations
 
 This framework is text in a skill file. It cannot guarantee compliance, force behavior, or persist across sessions. The LLM reading this may follow it closely, loosely, or not at all depending on context, attention, and task complexity. The QA Attestation is self-graded — useful as a confidence signal, not independent verification. The user is the final judge of quality.
