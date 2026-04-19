@@ -1,54 +1,54 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# stellar-coding-agent — skill framework repository
+# Only skill/ (source), boot.sh, setup.sh, README.md are tracked.
+# Everything else is platform scaffolding from z.ai my-project.
 
-# dependencies
-node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# Platform infrastructure (not part of this skill)
+.zscripts/
+Caddyfile
+db/
+bun.lock
+components.json
+eslint.config.mjs
+next.config.ts
+package.json
+postcss.config.mjs
+tailwind.config.ts
+tsconfig.json
+prisma/
+public/
+examples/
+mini-services/
+src/
+upload/
 
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
+# Environment and runtime
 .env*
-
-# vercel
-.vercel
-
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-local-*
-.claude
-.z-ai-config
+*.pid
+*.db
 *.log
 dev.log
-dev.out.log
-test
-prompt
-
 server.log
-# Skills directory
+
+# Platform skill runtime (gitignored — healed by boot.sh)
 /skills/
+
+# Generated output
+download/
+worklog.md
+
+# OS and editor
+.DS_Store
+*.pem
+.claude
+.z-ai-config
+local-*
+
+# Build artifacts
+.next/
+node_modules/
+/coverage
+/out/
+/build
+*.tsbuildinfo
+next-env.d.ts
+.vercel
