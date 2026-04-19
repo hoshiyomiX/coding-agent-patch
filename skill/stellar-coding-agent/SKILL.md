@@ -19,10 +19,10 @@ This framework structures coding work as a phase machine. It provides templates 
 A custom splash page is included in `assets/page.tsx` (closeable + minimizable). To activate the preview panel each session, the dev server on port 3000 must be running. Run once:
 
 ```bash
-bash skills/stellar-coding-agent/assets/boot.sh
+bash boot.sh
 ```
 
-This deploys the custom page to `src/app/page.tsx` and starts the dev server via `.zscripts/dev.sh`. The platform detects port 3000 and shows the preview panel automatically. If the server is already running, it exits immediately.
+This checks the remote repo for updates and pulls if available (fast-forward only, skips if local changes exist), self-heals skill files (copies git-tracked `skill/` → `skills/`), deploys the custom page to `src/app/page.tsx`, and starts the dev server via `.zscripts/dev.sh`. The platform detects port 3000 and shows the preview panel automatically. Idempotent — exits immediately if already running.
 
 ## Limitations
 

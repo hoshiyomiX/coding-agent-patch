@@ -1,14 +1,52 @@
 #!/bin/bash
 # stellar-coding-agent — Session Bootstrap (git-tracked)
-# Self-heals skill files and starts dev server. Run once per session.
-#
-# Usage:  cd ~/my-project && bash boot.sh
+# Auto-updates, self-heals skill files, and starts dev server.
+# Run once per session: cd ~/my-project && bash boot.sh
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SOURCE_DIR="$SCRIPT_DIR/skill/stellar-coding-agent"
 INSTALL_DIR="$SCRIPT_DIR/skills/stellar-coding-agent"
+
+# ── 0. Auto-update: pull if remote has newer skill files ──────────
+# Non-fatal: any git failure just skips the update and proceeds.
+if [ -d "$SCRIPT_DIR/.git" ]; then
+  BRANCH="$(git -C "$SCRIPT_DIR" branch --show-current 2>/dev/null || echo "")"
+  REMOTE="$(git -C "$SCRIPT_DIR" remote get-url origin 2>/dev/null || echo "")"
+
+  if [ -n "$BRANCH" ] && [ -n "$REMOTE" ]; then
+    # Fetch remote refs (network errors are non-fatal)
+    if git -C "$SCRIPT_DIR" fetch origin "$BRANCH" --quiet 2>/dev/null; then
+      LOCAL="$(git -C "$SCRIPT_DIR" rev-parse HEAD 2>/dev/null)"
+      REMOTE_SHA="$(git -C "$SCRIPT_DIR" rev-parse "origin/$BRANCH" 2>/dev/null)"
+
+      if [ "$LOCAL" != "$REMOTE_SHA" ]; then
+        # Check if local is behind (fast-forward possible)
+        BEHIND="$(git -C "$SCRIPT_DIR" rev-list --count HEAD.."origin/$BRANCH" 2>/dev/null || echo "0")"
+        AHEAD="$(git -C "$SCRIPT_DIR" rev-list --count "origin/$BRANCH"..HEAD 2>/dev/null || echo "0")"
+
+        if [ "$AHEAD" = "0" ] && [ "$BEHIND" -gt 0 ]; then
+          # We're behind, not diverged — check for dirty working tree
+          if [ -z "$(git -C "$SCRIPT_DIR" status --porcelain -- skill/ setup.sh boot.sh README.md 2>/dev/null)" ]; then
+            OLD_VER="$(grep -oP 'version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' "$SOURCE_DIR/SKILL.md" 2>/dev/null || echo "?")"
+            if git -C "$SCRIPT_DIR" pull --ff-only --quiet origin "$BRANCH" 2>/dev/null; then
+              NEW_VER="$(grep -oP 'version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' "$SOURCE_DIR/SKILL.md" 2>/dev/null || echo "?")"
+              echo "[boot] Updated ${OLD_VER} → ${NEW_VER} ($BEHIND commits)"
+            else
+              echo "[boot] WARNING: git pull failed — skipping update"
+            fi
+          else
+            echo "[boot] Skipping update — local changes detected in tracked files"
+          fi
+        elif [ "$AHEAD" -gt 0 ]; then
+          echo "[boot] Skipping update — local commits ahead of remote (diverged)"
+        fi
+      fi
+    # fetch failed (network/offline) — silent, not an error
+    fi
+  fi
+fi
 
 # ── 1. Self-heal: copy git-tracked skill/ → platform skills/ ─────
 if [ ! -f "$INSTALL_DIR/SKILL.md" ] || ! grep -q "Phase State Machine" "$INSTALL_DIR/SKILL.md" 2>/dev/null; then

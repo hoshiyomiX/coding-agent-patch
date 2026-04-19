@@ -49,7 +49,7 @@ Look for `☄️ STELLAR · v5.0.0 · ACTIVE` — confirms the framework loaded.
 | Command | Purpose |
 |---------|---------|
 | `bash setup.sh` | One-time install: copies `skill/` (git) → `skills/` (platform). Run after cloning. |
-| `bash boot.sh` | Per-session bootstrap: self-heals skill files if wiped, deploys splash page, starts dev server. |
+| `bash boot.sh` | Per-session bootstrap: checks remote for updates (fast-forward pull), self-heals skill files if wiped, deploys splash page, starts dev server. |
 
 ## Uninstall
 
