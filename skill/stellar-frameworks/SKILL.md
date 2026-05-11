@@ -1,5 +1,5 @@
 ---
-name: stellar-coding-agent
+name: stellar-frameworks
 version: 5.3.0
 description: "Deterministic coding workflow with phase state machine, traceability IDs, artifact templates, and structured verification."
 ---

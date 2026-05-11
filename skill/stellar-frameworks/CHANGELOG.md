@@ -26,6 +26,10 @@
 
 - **boot.sh auto-update failure** — the `NEED_INSTALL` check used `grep -q "Phase State Machine"` which matched both v5.0.0 and v5.2.0, preventing auto-update from v5.0.0 to v5.2.0. Now uses version tag comparison.
 
+### Rebranded
+
+- **stellar-coding-agent → stellar-frameworks** — project, skill, directory, and all internal references renamed. GitHub repo URL, `Skill()` invocation command, install paths, and documentation all updated. Historical CHANGELOG entries preserved as-is (they reference the old name at time of writing).
+
 ## [5.2.0] — 2026-05-10
 
 ### Added
@@ -90,7 +94,7 @@ v5.0.0 is a philosophical reset based on an honest audit of the framework's effe
 
 ### Fixed
 - **State diagram inconsistency** — phases.md had error arrow from VERIFY→SPECIFY; SKILL.md had DELIVER→SPECIFY. Consolidated to one canonical version: "On error: stop, diagnose, fix, return to VERIFY" with SPECIFY as the alternative for specification gaps.
-- **memory-template.md path mismatch** — Template referenced `~/code/memory.md` but phases.md referenced `skills/stellar-coding-agent/memory.md`. Fixed to single canonical path: `/home/z/my-project/skills/stellar-coding-agent/memory.md`.
+- **memory-template.md path mismatch** — Template referenced `~/code/memory.md` but phases.md referenced `skills/stellar-frameworks/memory.md`. Fixed to single canonical path: `/home/z/my-project/skills/stellar-frameworks/memory.md`.
 - **phases.md path reference** — Changed `Check memory.md in this skill directory` to avoid future path drift.
 
 ### Honest Assessment

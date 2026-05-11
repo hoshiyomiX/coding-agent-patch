@@ -1,12 +1,12 @@
 #!/bin/bash
-# stellar-coding-agent — Install, self-heal, and bootstrap (git-tracked) v5.3.0
+# stellar-frameworks — Install, self-heal, and bootstrap (git-tracked) v5.3.0
 # First run: installs skill files. Subsequent runs: auto-updates + self-heals + starts dev server.
-# Usage: bash stellar-coding-agent/boot.sh
+# Usage: bash stellar-frameworks/boot.sh
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SOURCE_DIR="$SCRIPT_DIR/skill/stellar-coding-agent"
+SOURCE_DIR="$SCRIPT_DIR/skill/stellar-frameworks"
 
 # IMPL-002: Detect project root — repo may be a subdirectory of /home/z/my-project/
 PROJECT_ROOT="${PROJECT_ROOT:-/home/z/my-project}"
@@ -18,7 +18,7 @@ else
 fi
 
 # Install skill to the project root's skills/ directory (where Skill system loads from)
-INSTALL_DIR="$PROJECT_ROOT/skills/stellar-coding-agent"
+INSTALL_DIR="$PROJECT_ROOT/skills/stellar-frameworks"
 
 # ── 0. Auto-update: pull if remote has newer skill files ──────────
 # Non-fatal: any git failure just skips the update and proceeds.

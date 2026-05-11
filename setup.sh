@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
 # ============================================================
-#  stellar-coding-agent v5.2.0
+#  stellar-frameworks v5.3.0
 #
-#  Install:  cd /home/z/my-project/stellar-coding-agent && bash setup.sh
-#  Invoke:   Skill(command="stellar-coding-agent")
+#  Install:  cd /home/z/my-project/stellar-frameworks && bash setup.sh
+#  Invoke:   Skill(command="stellar-frameworks")
 #  Marker:   ☄️
+#  Note:     boot.sh is the preferred installer — this file is
+#            retained for standalone use.
 # ============================================================
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SOURCE_DIR="${SCRIPT_DIR}/skill/stellar-coding-agent"
+SOURCE_DIR="${SCRIPT_DIR}/skill/stellar-frameworks"
 # IMPL-003: Install to project root's skills/ dir where Skill system loads from
 PROJECT_ROOT="${PROJECT_ROOT:-/home/z/my-project}"
-INSTALL_DIR="${PROJECT_ROOT}/skills/stellar-coding-agent"
+INSTALL_DIR="${PROJECT_ROOT}/skills/stellar-frameworks"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -27,7 +29,7 @@ fail()  { echo -e "${RED}[FAIL]${NC}  $*"; }
 
 echo ""
 echo "============================================"
-echo "  ☄️ stellar-coding-agent v5.2.0"
+echo "  ☄️ stellar-frameworks v5.3.0"
 echo "============================================"
 echo ""
 
@@ -61,8 +63,8 @@ if [ -f "${INSTALL_DIR}/SKILL.md" ]; then
         ERRORS=$((ERRORS + 1))
     fi
 
-    if grep -q "v5.2.0" "${INSTALL_DIR}/SKILL.md"; then
-        ok "Version 5.2.0 confirmed"
+    if grep -q "v5.3.0" "${INSTALL_DIR}/SKILL.md"; then
+        ok "Version 5.3.0 confirmed"
     else
         fail "Version mismatch"
         ERRORS=$((ERRORS + 1))
@@ -77,10 +79,10 @@ if [ -f "${INSTALL_DIR}/SKILL.md" ]; then
         procedure/decision-trees/error-resolution.md \
         constraints/code-standards.md \
         constraints/type-safety.md \
-        knowledge/architecture.md \
-        knowledge/conventions.md \
-        knowledge/platform-constraints.md \
-        knowledge/error-patterns.md \
+        knowledge/universal/architecture.md \
+        knowledge/universal/conventions.md \
+        knowledge/universal/error-patterns.md \
+        knowledge/platform/zai-sandbox.md \
         CHANGELOG.md; do
         if [ -f "${INSTALL_DIR}/${f}" ]; then
             ok "${f}"
@@ -98,9 +100,9 @@ fi
 echo ""
 echo "============================================"
 if [ $ERRORS -eq 0 ]; then
-    echo -e "${GREEN}  ☄️ v5.2.0 installed!${NC}"
+    echo -e "${GREEN}  ☄️ v5.3.0 installed!${NC}"
     echo ""
-    echo "  Invoke: Skill(command=\"stellar-coding-agent\")"
+    echo "  Invoke: Skill(command=\"stellar-frameworks\")"
     echo "============================================"
 else
     echo -e "${RED}  Install completed with ${ERRORS} error(s)${NC}"
