@@ -1,14 +1,14 @@
 ---
 name: stellar-frameworks
-version: 5.3.0
-description: "Deterministic coding workflow with phase state machine, traceability IDs, artifact templates, and structured verification."
+version: 5.3.1
+description: "Core coding workflow — runs ALL code tasks through a phase machine: SPECIFY (problem) → PLAN (solution) → IMPLEMENT (code) → VERIFY (tests) → DELIVER (report). Covers building features, fixing bugs, refactoring, writing scripts/functions, debugging errors, generating code files (Dockerfiles, configs, tests, utilities), and resolving code issues. The phase machine always runs — it adapts verbosity to complexity but never skips. Use for any task involving writing, modifying, fixing, debugging, or generating code, regardless of size."
 ---
 <!-- VERSION SYNC: on bump, update (1) frontmatter above, (2) activation banner below, (3) boot.sh header, (4) setup.sh header -->
 
 ## Activation
 
 ```
-☄️ STELLAR · v5.3.0 · ACTIVE
+☄️ STELLAR · v5.3.1 · ACTIVE
    Phase State Machine · Traceability IDs · Artifact Templates · SSV · Memory · Continuity
 ```
 

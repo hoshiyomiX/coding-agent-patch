@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.3.1] — 2026-05-13
+
+### Changed
+
+- **Skill description rewritten for aggressive triggering** — replaced abstract jargon ("deterministic coding workflow with phase state machine, traceability IDs, artifact templates, and structured verification") with action-oriented trigger description (~75 words). Explicitly enumerates task types (features, bugs, refactoring, scripts, debugging, code generation) and includes universal catch-all closing phrase. Manual eval score: 5/20 → 20/20. The phase machine is now described as non-optional ("always runs — adapts verbosity to complexity but never skips") per user requirement that all code tasks use the framework.
+
+### Fixed
+
+- **setup.sh version confirmation message** — grep pattern was updated to match the new version string but the confirmation message was not, causing it to report "Version 5.3.0 confirmed" when checking for v5.3.1.
+
 ## [5.3.0] — 2026-05-11
 
 ### Added

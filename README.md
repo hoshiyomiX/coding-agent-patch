@@ -4,7 +4,7 @@
 
 **Deterministic coding workflow for LLM agents**
 
-[![Version](https://img.shields.io/badge/version-5.3.0-blue.svg)](skill/stellar-frameworks/CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-5.3.1-blue.svg)](skill/stellar-frameworks/CHANGELOG.md)
 
 Structures coding tasks as a **phase state machine** with traceability IDs, artifact templates, source state verification, and file-based agent memory. Designed for the [z.ai](https://z.ai) platform.
 
@@ -37,7 +37,7 @@ Invoke in any session:
 Skill(command="stellar-frameworks")
 ```
 
-Look for `☄️ STELLAR · v5.3.0 · ACTIVE` — confirms the framework loaded.
+Look for `☄️ STELLAR · v5.3.1 · ACTIVE` — confirms the framework loaded.
 
 That's it. `boot.sh` handles everything: first-time install, auto-updates from remote, self-healing if files get wiped, Next.js project initialization (if needed), and dev server startup. Run it once per session.
 
@@ -173,6 +173,7 @@ stellar-frameworks/
 
 | Version | Summary |
 |---------|---------|
+| [**v5.3.1**](skill/stellar-frameworks/CHANGELOG.md) | Skill description optimized for aggressive triggering (eval 5/20 → 20/20). setup.sh version confirmation fix. |
 | [**v5.3.0**](skill/stellar-frameworks/CHANGELOG.md) | Task type awareness, knowledge restructure (universal/platform), skill chain orchestration, memory hardening, compact verification, PCR tier, TodoWrite integration, AI/SDK error path, completion signal, boot.sh auto-bootstrap, session continuity. |
 | [**v5.2.0**](skill/stellar-frameworks/CHANGELOG.md) | Agent memory system (Hermes+Memweave inspired), complexity tiers, compact PCR, path safety, triggering improvements. |
 | [**v5.1.0**](skill/stellar-frameworks/CHANGELOG.md) | Completion signal moved to high-attention zone, abbreviation floor added. |
