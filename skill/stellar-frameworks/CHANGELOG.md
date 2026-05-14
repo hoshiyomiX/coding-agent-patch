@@ -1,5 +1,21 @@
 # Changelog
 
+## [5.4.2] — 2026-05-15
+
+### Fixed
+
+- **Critical: .bashrc auto-heal hook written to wrong path** — boot.sh and setup.sh wrote the auto-heal hook to `$PROJECT_ROOT/.bashrc` (`/home/z/my-project/.bashrc`), which is **never sourced by the platform**. The platform sources `$HOME/.bashrc` (`/home/z/.bashrc`). This meant the entire self-heal mechanism was non-functional: after sandbox resets, the skill files were wiped and never auto-recovered. Fixed by writing to `$HOME/.bashrc` in both boot.sh and setup.sh.
+- **Old wrong .bashrc cleanup** — boot.sh now removes any stale `.bashrc` hook from the project root (`$PROJECT_ROOT/.bashrc`) if it exists from a previous installation.
+
+### Added
+
+- **Post-install restart notice** — boot.sh now displays a clear warning box after fresh install: "Skill installed but NOT yet available in this session. Please RESTART this session to activate stellar-frameworks." The platform loads `available_skills` at session start; skills installed mid-session are invisible until the next session. This prevents user confusion when `Skill(command="stellar-frameworks")` fails immediately after running the one-liner.
+- **setup.sh auto-heal hook** — setup.sh now also writes the `$HOME/.bashrc` auto-heal hook, not just boot.sh. Previously only boot.sh configured persistence.
+
+### Why
+
+User reported persistent bug: after running the one-liner in a fresh sandbox and leaving for hours, `stellar-frameworks` disappeared from `available_skills`. The root cause was a one-line path error: `.bashrc` hook was written to `/home/z/my-project/.bashrc` (never sourced) instead of `/home/z/.bashrc` (sourced by platform on shell open). The self-heal mechanism added in v5.4.1 was completely non-functional due to this path mistake.
+
 ## [5.4.1] — 2026-05-14
 
 ### Added

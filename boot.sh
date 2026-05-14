@@ -1,5 +1,5 @@
 #!/bin/bash
-# stellar-frameworks — Install, self-heal, and bootstrap (git-tracked) v5.4.1
+# stellar-frameworks — Install, self-heal, and bootstrap (git-tracked) v5.4.2
 # Works from anywhere: auto-clones repo if missing, then installs + bootstraps.
 # Self-heal: after first run, adds .bashrc hook so future session resets auto-recover.
 # Usage: bash <(curl -sL https://raw.githubusercontent.com/hoshiyomiX/stellar-frameworks/main/boot.sh)
@@ -158,24 +158,41 @@ fi
 
 # ── 2. Self-heal persistence ────────────────────────────────────
 # Ensures stellar-frameworks auto-recovers after sandbox resets.
-# Writes a .bashrc hook that runs boot.sh --install-only on every shell open.
+# Writes a hook to $HOME/.bashrc that runs boot.sh --install-only on every shell open.
+# CRITICAL: must be $HOME/.bashrc (sourced by platform), NOT $PROJECT_ROOT/.bashrc.
 # Non-blocking (background) so it never stalls the session.
 
-BASHRC="$PROJECT_ROOT/.bashrc"
+BASHRC="$HOME/.bashrc"
 BASHRC_MARKER="# stellar-frameworks auto-heal"
 BASHRC_CMD="bash $TARGET_DIR/boot.sh --install-only >/dev/null 2>&1 &"
 
 if [ -f "$BASHRC" ]; then
   if ! grep -qF "$BASHRC_MARKER" "$BASHRC" 2>/dev/null; then
     printf '\n%s\n%s\n' "$BASHRC_MARKER" "$BASHRC_CMD" >> "$BASHRC"
-    echo "[boot] Added auto-heal hook to .bashrc"
+    echo "[boot] Added auto-heal hook to $BASHRC"
   fi
 else
   printf '%s\n%s\n' "$BASHRC_MARKER" "$BASHRC_CMD" > "$BASHRC"
-  echo "[boot] Created .bashrc with auto-heal hook"
+  echo "[boot] Created $BASHRC with auto-heal hook"
 fi
 
-# ── 3. Deploy custom splash ──────────────────────────────────────
+# ── 3. Post-install notice ─────────────────────────────────────
+# The platform loads available_skills at session start. If this is a fresh
+# install (NEED_INSTALL=true), the skill won't appear until the NEXT session.
+# Inform the user so they know to restart.
+
+if $NEED_INSTALL && ! $INSTALL_ONLY; then
+  echo ""
+  echo "╔══════════════════════════════════════════════════════════════╗"
+  echo "║  ⚠️  Skill installed but NOT yet available in this session.    ║"
+  echo "║  The platform loads skills at session start.                   ║"
+  echo "║  Please RESTART this session to activate stellar-frameworks.   ║"
+  echo "║  Auto-heal is configured — future sessions will self-recover.  ║"
+  echo "╚══════════════════════════════════════════════════════════════╝"
+  echo ""
+fi
+
+# ── 4. Deploy custom splash ──────────────────────────────────────
 # Assets are gitignored — only exist if previously bootstrapped
 SPLASH="$INSTALL_DIR/assets/page.tsx"
 # IMPL-002: TARGET must point to the Next.js project, not the repo dir
@@ -187,7 +204,7 @@ if [ -f "$SPLASH" ]; then
   echo "[boot] Splash deployed → src/app/page.tsx"
 fi
 
-# ── 4. Dev server (skip with --install-only) ─────────────────────
+# ── 5. Dev server (skip with --install-only) ─────────────────────
 if $INSTALL_ONLY; then
   echo "[boot] Skipping dev server (--install-only)"
   exit 0
