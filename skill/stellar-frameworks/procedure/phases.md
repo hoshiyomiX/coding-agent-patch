@@ -97,7 +97,7 @@ Criteria: single file, no schema change, no new dependencies, obvious approach.
 
 | Phase | Behavior |
 |-------|----------|
-| SPECIFY | Restate goal in 1-2 sentences. Do NOT output the problem-spec template. |
+| SPECIFY | Quick source check (SADC), then restate goal in 1-2 sentences. Do NOT output the problem-spec template. |
 | PLAN | List steps as bullet points. Do NOT output the implementation-plan template. Traceability IDs optional. |
 | IMPLEMENT | Write code. No inline Traceability ID comments required. |
 | VERIFY | Run automated checks (lint, type check). Do NOT output the verification-report template. |
@@ -126,20 +126,25 @@ All phases use their full templates with extra detail. Traceability IDs required
 
 ## Phase 2: SPECIFY
 
-**Purpose**: Produce a precise problem specification that removes ambiguity.
+**Purpose**: Produce a precise problem specification that removes ambiguity — grounded in real sources, not assumptions.
 
 **Entry criteria**: Task complexity classified, task type identified, user preferences loaded, source state verified (if git repository — see SSV in SKILL.md).
 
 **Actions**:
-1. Restate the request in precise technical terms.
-2. Identify functional requirements.
-3. Identify technical constraints. Reference `knowledge/universal/architecture.md` for general constraints and `knowledge/platform/zai-sandbox.md` for sandbox-specific rules.
-4. Enumerate edge cases with handling strategies.
-5. List all files to be created or modified with action type (create/modify).
-6. Assess risk level (LOW / MEDIUM / HIGH) with justification.
-7. Identify dependencies — include required skills if the task needs multi-skill orchestration (see Skill Chain below).
-8. If git repository, perform Source State Verification (see SKILL.md) and record the verified state.
-9. Fill out the problem specification template and present to user.
+1. **Source Availability & Documentation Check (SADC)** — Before anything else, research:
+   - Are there existing packages, libraries, frameworks, or SDK methods that already solve this? Search before building.
+   - What does the official documentation say about the recommended approach? Read it, don't guess.
+   - Are there established patterns or best practices for this type of task?
+   - Record all sources checked. If no existing solution found, state it explicitly. See SADC in SKILL.md for tier-specific requirements.
+2. Restate the request in precise technical terms — informed by the sources found in step 1.
+3. Identify functional requirements.
+4. Identify technical constraints. Reference `knowledge/universal/architecture.md` for general constraints and `knowledge/platform/zai-sandbox.md` for sandbox-specific rules.
+5. Enumerate edge cases with handling strategies.
+6. List all files to be created or modified with action type (create/modify).
+7. Assess risk level (LOW / MEDIUM / HIGH) with justification.
+8. Identify dependencies — include required skills if the task needs multi-skill orchestration (see Skill Chain below).
+9. If git repository, perform Source State Verification (see SKILL.md) and record the verified state.
+10. Fill out the problem specification template and present to user.
 
 **Artifact**: `procedure/templates/problem-spec.md`
 

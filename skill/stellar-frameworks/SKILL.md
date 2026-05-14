@@ -1,15 +1,15 @@
 ---
 name: stellar-frameworks
-version: 5.4.0
+version: 5.4.1
 description: "Core workflow — runs ALL tasks through a phase machine (SPECIFY → PLAN → IMPLEMENT → VERIFY → DELIVER) without exception. Coding tasks: full phases with Traceability IDs and verification. Non-coding tasks (questions, explanations, recommendations): Minimal tier — all phases run internally, only IMPLEMENT produces output. Every task gets a Process Compliance Report. Covers building features, fixing bugs, refactoring, writing scripts, debugging, generating code, answering questions, explaining concepts, and providing recommendations. The phase machine always activates — complexity adapts, participation never skips."
 ---
-<!-- VERSION SYNC: on bump, update (1) frontmatter above, (2) activation banner below, (3) boot.sh header, (4) setup.sh header -->
+<!-- VERSION SYNC: on bump, update (1) frontmatter above, (2) activation banner below, (3) boot.sh header, (4) setup.sh header, (5) README.md badge + invoke line + version history -->
 
 ## Activation
 
 ```
-☄️ STELLAR · v5.4.0 · ACTIVE
-   Phase State Machine · Traceability IDs · Artifact Templates · SSV · Memory · Continuity · Universal
+☄️ STELLAR · v5.4.1 · ACTIVE
+   Phase State Machine · Traceability IDs · Artifact Templates · SSV · SADC · Memory · Continuity · Universal
 ```
 
 This framework structures ALL work as a phase machine. It activates for every task — coding or not — without exception. What changes between tasks is the complexity tier, not whether the framework participates. Coding tasks get full phases with Traceability IDs and formal verification. Non-coding tasks (questions, explanations, recommendations) get Minimal tier — all phases still run, but SPECIFY, PLAN, and VERIFY happen internally (the agent thinks through them without outputting formal artifacts). Only IMPLEMENT produces visible work. Every task, regardless of type, gets a Process Compliance Report recording that the framework was followed.
@@ -31,7 +31,7 @@ On error: stop, diagnose, fix, return to VERIFY.
 | Phase | Purpose |
 |-------|---------|
 | IDLE | Receive task, classify complexity |
-| SPECIFY | Restate problem, identify constraints and edge cases, list affected files |
+| SPECIFY | Research sources, restate problem, identify constraints |
 | PLAN | Create implementation steps with Traceability IDs |
 | IMPLEMENT | Write code, reference Traceability IDs |
 | VERIFY | Run checks, trace edge cases, confirm Traceability IDs satisfied |
@@ -99,6 +99,25 @@ Before analyzing or auditing a git repository, verify data freshness:
 5. Only proceed after SSV passes
 
 SSV is required after cross-session boundaries or when previous sessions involved git operations. Skip SSV for purely creative tasks with no git involvement.
+
+## Source Availability & Documentation Check (SADC)
+
+Before planning any implementation, verify that the approach is grounded in real sources — not assumptions. The most expensive refactor is the one caused by building something that already existed or using an API incorrectly because the docs weren't checked first.
+
+**Rule**: In the SPECIFY phase, before restating the problem, the agent must research available solutions and official documentation.
+
+1. **Existing solutions** — Are there packages, libraries, frameworks, or SDK methods that already solve this? Search before building.
+2. **Official documentation** — What does the official doc say about the recommended approach? Read it, don't guess.
+3. **Known patterns** — Are there established patterns, best practices, or examples for this type of task?
+
+| Complexity | SADC Requirement |
+|-----------|-------------------|
+| **Minimal** | Skip — knowledge questions don't need source research. |
+| **Simple** | Quick check — verify the approach against at least one source (docs, search, or existing code). |
+| **Standard** | Full research — search for existing solutions, read official docs, confirm no wheel reinvention. |
+| **Complex** | Deep research — multiple sources, compare approaches, document tradeoffs, present alternatives. |
+
+SADC is the first action in SPECIFY. The problem specification must reference the sources checked. If no existing solution is found, state that explicitly — "searched npm/PyPI/docs, no existing package found" is a valid result. Building from scratch when a library exists is a spec-level defect.
 
 ## Error Recovery
 

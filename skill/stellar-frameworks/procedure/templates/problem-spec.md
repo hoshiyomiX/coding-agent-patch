@@ -18,6 +18,7 @@ Copy and complete the following for every task:
 | Field | Value |
 |-------|-------|
 | Request | [Exact user request — quoted verbatim] |
+| Source Research | [Existing solutions found, official docs consulted, patterns identified. If none found, state explicitly.] |
 | Functional Requirement | [What the code must accomplish — stated precisely] |
 | Technical Constraints | [Platform limits, sandbox rules, framework requirements] |
 | Identified Edge Cases | [List each edge case with handling strategy] |
@@ -52,6 +53,7 @@ Copy and complete the following for every task:
 | Field | Guidance |
 |-------|----------|
 | **Request** | Quote the user's exact words. Do not paraphrase. This anchors the specification to the original intent. |
+| **Source Research** | Document what sources were checked: existing packages/libraries found, official docs read, known patterns identified. If no existing solution was found, state explicitly — e.g., "Searched npm for X, checked Next.js docs for Y — no existing package or built-in method found." Building from scratch when a library exists is a spec-level defect. |
 | **Functional Requirement** | Translate the request into a precise technical statement. Use "must" language: "The system must render a list of items sorted by creation date." |
 | **Technical Constraints** | Reference `knowledge/universal/architecture.md` for general constraints and `knowledge/platform/zai-sandbox.md` for sandbox-specific rules. Include framework requirements (e.g., "Must use server components for data fetching"). |
 | **Identified Edge Cases** | Think about empty inputs, missing data, concurrent operations, boundary values, and error states. Each edge case needs a concrete handling strategy, not just identification. |

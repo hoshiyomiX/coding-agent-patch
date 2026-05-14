@@ -1,5 +1,21 @@
 # Changelog
 
+## [5.4.1] — 2026-05-14
+
+### Added
+
+- **Source Availability & Documentation Check (SADC)** — new mandatory step as the first action (action 1) in SPECIFY phase. Before restating the problem, the agent must research: (1) existing packages/libraries/frameworks that already solve the task, (2) official documentation for the recommended approach, (3) established patterns and best practices. Tier-specific depth: Minimal (skip), Simple (quick check against one source), Standard (full research — search + docs + confirm no wheel reinvention), Complex (deep research — multiple sources, compare approaches, document tradeoffs). New section in SKILL.md with full specification.
+- **Source Research field** in problem-spec template — new required field documenting what sources were checked, what was found, and if nothing was found, an explicit statement. "Building from scratch when a library exists is a spec-level defect."
+
+### Changed
+
+- **SPECIFY phase purpose** — updated from "removes ambiguity" to "removes ambiguity — grounded in real sources, not assumptions."
+- **SPECIFY phase actions** — renumbered with SADC as action 1 (was implicitly action 0). Problem restatement now explicitly notes it must be "informed by the sources found in step 1."
+
+### Why
+
+The framework had a fatal gap: SPECIFY jumped straight to "restate the problem" without checking if a solution already existed or what the official docs recommended. This caused agents to build from assumptions, use APIs incorrectly, or reinvent existing wheels — leading to massive refactoring when the correct approach was discovered later. SADC closes this gap by making source research the first thing that happens in SPECIFY, before any planning begins. It is to implementation what SSV is to analysis: a freshness check that prevents working from stale assumptions.
+
 ## [5.4.0] — 2026-05-13
 
 ### Changed

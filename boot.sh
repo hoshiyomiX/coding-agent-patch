@@ -1,5 +1,5 @@
 #!/bin/bash
-# stellar-frameworks — Install, self-heal, and bootstrap (git-tracked) v5.4.0
+# stellar-frameworks — Install, self-heal, and bootstrap (git-tracked) v5.4.1
 # Works from anywhere: auto-clones repo if missing, then installs + bootstraps.
 # Usage: bash <(curl -sL https://raw.githubusercontent.com/hoshiyomiX/stellar-frameworks/main/boot.sh)
 #    or: bash ~/my-project/stellar-frameworks/boot.sh

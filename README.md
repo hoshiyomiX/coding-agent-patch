@@ -4,7 +4,7 @@
 
 **Universal task workflow for LLM agents**
 
-[![Version](https://img.shields.io/badge/version-5.4.0-blue.svg)](skill/stellar-frameworks/CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-5.4.1-blue.svg)](skill/stellar-frameworks/CHANGELOG.md)
 
 Structures ALL tasks — coding and non-coding — as a **phase state machine** with traceability IDs, artifact templates, source state verification, and file-based agent memory. For coding tasks, full phases with verification. For non-coding tasks, phases run internally (Minimal tier) but the framework still activates for traceability. Designed for the [z.ai](https://z.ai) platform.
 
@@ -24,7 +24,7 @@ IDLE → SPECIFY → PLAN → IMPLEMENT → VERIFY → DELIVER
 cd ~/my-project && git clone https://github.com/hoshiyomiX/stellar-frameworks.git 2>/dev/null; bash stellar-frameworks/boot.sh
 ```
 
-Invoke: `Skill(command="stellar-frameworks")` — look for `☄️ STELLAR · v5.4.0 · ACTIVE`.
+Invoke: `Skill(command="stellar-frameworks")` — look for `☄️ STELLAR · v5.4.1 · ACTIVE`.
 
 ---
 
@@ -37,7 +37,7 @@ The framework provides **tools, not rules**. Each phase produces an artifact the
 | Phase | Output | Why |
 |-------|--------|-----|
 | **IDLE** | Complexity classification | Routes the task to the right verbosity level |
-| **SPECIFY** | Problem specification | Forces precise thinking before writing code |
+| **SPECIFY** | Problem specification + source research | Grounds the spec in real docs, not assumptions |
 | **PLAN** | Implementation plan with Traceability IDs | Maps requirements to code locations |
 | **IMPLEMENT** | Annotated code | Each block references its Traceability ID |
 | **VERIFY** | Evidence-based report | Automated checks + edge case tracing |
@@ -81,6 +81,16 @@ git fetch → compare HEAD to origin → sync if behind → proceed
 ```
 
 Prevents stale-checkout analysis (the failure that inspired this feature).
+
+### Source Availability & Documentation Check (SADC)
+
+Before planning any implementation, the framework verifies the approach is grounded in real sources — not assumptions:
+
+```text
+Search existing packages → Read official docs → Check patterns → Proceed
+```
+
+Prevents reinventing existing wheels or using APIs incorrectly. Tier-specific depth: Minimal (skip), Simple (quick check), Standard (full research), Complex (deep multi-source comparison).
 
 ### Agent Memory
 
@@ -160,6 +170,7 @@ stellar-frameworks/
 
 | Version | Summary |
 |---------|---------|
+| [**v5.4.1**](skill/stellar-frameworks/CHANGELOG.md) | Source Availability & Documentation Check (SADC) — mandatory research before SPECIFY. Prevents building from assumptions. |
 | [**v5.4.0**](skill/stellar-frameworks/CHANGELOG.md) | Adaptive complexity tiers — Minimal/Simple/Standard/Complex. All phases always run, no SKIP. Non-coding tasks use Minimal tier (phases internal, only IMPLEMENT visible). |
 | [**v5.3.1**](skill/stellar-frameworks/CHANGELOG.md) | Skill description optimized for aggressive triggering (eval 5/20 → 20/20). setup.sh version confirmation fix. |
 | [**v5.3.0**](skill/stellar-frameworks/CHANGELOG.md) | Task type awareness, knowledge restructure (universal/platform), skill chain orchestration, memory hardening, compact verification, PCR tier, TodoWrite integration, AI/SDK error path, completion signal, boot.sh auto-bootstrap, session continuity. |
