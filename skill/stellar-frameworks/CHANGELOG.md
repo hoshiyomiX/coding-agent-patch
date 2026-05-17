@@ -1,5 +1,32 @@
 # Changelog
 
+## [5.6.0] — 2026-05-18
+
+### Changed
+
+- **Terminology overhaul: PCR → Delivery Reports** — The term "Process Compliance Report" (PCR) was contradictory to the v5.0.0 philosophy that explicitly rejected compliance theater. Every reference to PCR has been replaced with plain-language terminology:
+  - "Scope PCR" → "Scope Commitment" — the pre-implementation contract output at end of PLAN
+  - "Delivery PCR" → "Delivery Report" — the post-implementation record output at end of DELIVER
+  - "Compact PCR" → "Compact Report" — single-line format for Simple tasks
+  - "Minimal PCR" → inline `☄️ PASS` — one-line for non-coding tasks
+  - "Full PCR" → "Delivery Report" — the full block for Standard/Complex tasks
+  - "PIVOT" → "Pivot" — consistent sentence case
+  - "DELTA Scope" → "Scope Drift" — clearer about what it tracks
+
+- **Block format changes** — Scope Commitment now uses `☄️ COMMIT [Standard]` header. Delivery Report uses `☄️ REPORT [Standard]`. Minimal tasks use `☄️ PASS | Evidence: ...` with no tier label. Compact Report uses `Drift: NONE` instead of `Delta: NONE`.
+
+- **Section renamed** — "Process Compliance Report (PCR v2)" → "Delivery Reports" in SKILL.md. "Complexity Tiers & PCR Format" → "Complexity Tiers & Report Format" in phases.md.
+
+- **Zero acronyms** — No parent acronym. "Scope Commitment" and "Delivery Report" are self-explanatory without reading docs. This aligns with the framework's design principle: give the LLM tools it wants to use, not compliance mandates.
+
+### Why
+
+"Process Compliance Report" sounded like an ISO 9001 audit artifact — the exact kind of compliance theater the v5.0.0 philosophical reset explicitly rejected. The LLM reading this file is not complying with regulations; it's choosing to use useful tools. The new names describe what each output actually is: a commitment before building, and a report after building. No jargon, no acronyms, no theater.
+
+### Files Modified
+
+SKILL.md, procedure/phases.md, procedure/decision-trees/error-resolution.md, procedure/templates/problem-spec.md, procedure/templates/implementation-plan.md, procedure/templates/incident-report.md, README.md. Historical CHANGELOG entries preserved as-is (they document what the terminology was at time of writing).
+
 ## [5.5.1] — 2026-05-18
 
 ### Fixed

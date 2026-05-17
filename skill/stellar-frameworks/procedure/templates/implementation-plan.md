@@ -21,7 +21,7 @@ Copy and complete the following for every task:
 
 ## Fallback Approach
 
-[Alternative approach if the primary fails. 1-2 sentences. If no viable fallback exists, state "No viable fallback — would require user input." This feeds the Adaptive Pivot Protocol's PIVOT recovery path.]
+[Alternative approach if the primary fails. 1-2 sentences. If no viable fallback exists, state "No viable fallback — would require user input." This feeds the Adaptive Pivot Protocol's pivot recovery path.]
 
 ## Scope Boundary
 
@@ -72,7 +72,7 @@ Copy and complete the following for every task:
 |-------|----------|
 | **Approach** | State the design decision clearly. If there are alternatives, explain why this one was chosen. Keep it to 2-3 sentences. |
 | **Fallback Approach** | REQUIRED for Standard/Complex tasks. This is the recovery path if the primary approach fails during IMPLEMENT. It should be a concrete alternative, not "try harder." If no fallback exists (e.g., the task requires a specific library that may not support the needed feature), say so explicitly. This field feeds the Adaptive Pivot Protocol — when an Approach Failure is detected, the agent checks this field first before inventing a new approach. |
-| **Scope Boundary** | REQUIRED for Standard/Complex tasks. The IN list defines what will be delivered. The OUT list defines what will NOT be delivered. The OUT list is critical for preventing scope creep — if IMPLEMENT starts producing work not in the IN list, it's a deviation. The delivery PCR's DELTA Scope field measures this. |
+| **Scope Boundary** | REQUIRED for Standard/Complex tasks. The IN list defines what will be delivered. The OUT list defines what will NOT be delivered. The OUT list is critical for preventing scope creep — if IMPLEMENT starts producing work not in the IN list, it's a deviation. The delivery report's Scope Drift field measures this. |
 | **Implementation Steps** | Each step must be specific enough that another developer could execute it without additional context. "Add a submit button" is too vague — "Add a submit button to the form in `src/app/page.tsx` that calls `handleSubmit` on click" is specific. |
 | **Traceability ID** | Sequential numbering: IMPL-001, IMPL-002, etc. These IDs are referenced in code comments during IMPLEMENT and in verification items during VERIFY. |
 | **Requirements Mapping** | Every functional requirement and edge case from the problem specification must appear here. This confirms nothing was dropped between specification and planning. |

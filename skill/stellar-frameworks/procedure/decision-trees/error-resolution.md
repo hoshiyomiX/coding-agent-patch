@@ -61,13 +61,13 @@ Before following any diagnostic path, determine if the error is a **Code Bug** o
 **If Approach Failure is detected**:
 
 1. **Stop fixing immediately** — do not attempt a third fix attempt on the same approach.
-2. **Check Scope PCR fallback** — the implementation plan's Fallback Approach field should have a concrete alternative.
+2. **Check Scope Commitment fallback** — the implementation plan's Fallback Approach field should have a concrete alternative.
 3. **Evaluate the fallback** — is it still viable given what was learned from the failure?
 4. **Present pivot to user** — explain what failed, why the fallback is better, and what changes.
 5. **Re-enter PLAN** — create a new implementation plan using the fallback (or a new approach if fallback is not viable).
-6. **Output new Scope PCR** — update the Scope PCR with the new approach.
+6. **Output new Scope Commitment** — update the Scope Commitment with the new approach.
 7. **Re-implement and re-verify** — full cycle from PLAN through DELIVER.
-8. **Record PIVOT in delivery PCR** — the PIVOT field documents the approach change for audit trail.
+8. **Record Pivot in delivery report** — the Pivot field documents the approach change for audit trail.
 
 **Output**: Classification as Code Bug or Approach Failure. If Approach Failure, proceed to pivot flow instead of diagnostic path.
 

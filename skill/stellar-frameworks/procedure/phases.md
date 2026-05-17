@@ -21,12 +21,12 @@ Phase transitions are guarded. A phase cannot begin until its entry condition is
 | Gate | Condition | Action if not met |
 |------|-----------|-------------------|
 | SPECIFY → PLAN | All problem-spec fields filled, SADC complete | Complete missing fields before proceeding |
-| PLAN → IMPLEMENT | Implementation plan complete + Scope PCR output (Standard/Complex) | Present plan to user first |
+| PLAN → IMPLEMENT | Implementation plan complete + Scope Commitment output (Standard/Complex) | Present plan to user first |
 | IMPLEMENT → VERIFY | Self-review checklist pass, all IMPL steps done | Fix issues before transitioning |
 | VERIFY → DELIVER | All verification items PASS | Return to IMPLEMENT (or SPECIFY if spec gap) |
 
 **Simple tier**: Gates run internally — the agent validates conditions but doesn't produce formal gate output.
-**Standard/Complex tier**: PLAN → IMPLEMENT gate produces a Scope PCR (see SKILL.md). The delivery PCR's DELTA field tracks any deviation from this commitment.
+**Standard/Complex tier**: PLAN → IMPLEMENT gate produces a Scope Commitment (see SKILL.md). The delivery report's Scope Drift field tracks any deviation from this commitment.
 
 ---
 
@@ -85,7 +85,7 @@ Traceability IDs (IMPL-001, IMPL-002, ...) apply to Simple, Standard, and Comple
 
 ---
 
-## Complexity Tiers & PCR Format
+## Complexity Tiers & Report Format
 
 The phase machine always runs — every task passes through all six phases. What changes between tiers is the verbosity of artifacts, not the rigor of thinking. No phase is ever skipped; the lowest tier runs phases internally.
 
@@ -99,15 +99,15 @@ Criteria: knowledge question, explanation, or recommendation — no code or file
 | PLAN | Internal — think about how to answer. No template output. |
 | IMPLEMENT | Produce the answer, explanation, or recommendation. |
 | VERIFY | Internal — self-check accuracy and completeness. No template output. |
-| DELIVER | Output Minimal PCR (see below). Skip session digest to memory. |
+| DELIVER | Output minimal report (see below). Skip session digest to memory. |
 
-Minimal PCR format (use this instead of the full block):
+Minimal report format (use this instead of the full block):
 
 ```
-☄️ PCR [Minimal] Phases→internal : PASS | Evidence: <one-line result>
+☄️ PASS | Evidence: <one-line result>
 ```
 
-### Simple (compact PCR)
+### Simple (compact report)
 
 Criteria: single file, no schema change, no new dependencies, obvious approach.
 
@@ -117,26 +117,26 @@ Criteria: single file, no schema change, no new dependencies, obvious approach.
 | PLAN | List steps as bullet points. Do NOT output the implementation-plan template. Traceability IDs optional. |
 | IMPLEMENT | Write code. No inline Traceability ID comments required. |
 | VERIFY | Run automated checks (lint, type check). Do NOT output the verification-report template. |
-| DELIVER | Output compact PCR (see below). Still write session digest to `memory/YYYY-MM-DD.md`. |
+| DELIVER | Output compact report (see below). Still write session digest to `memory/YYYY-MM-DD.md`. |
 
-Compact PCR format (use this instead of the full block):
+Compact report format (use this instead of the full block):
 
 ```
-☄️ PCR [Simple]
-SPECIFY→DELIVER : PASS | Evidence: <one-line result> | Defects: 0 | Delta: NONE
+☄️ REPORT [Simple]
+SPECIFY→DELIVER : PASS | Evidence: <one-line result> | Defects: 0 | Drift: NONE
 ```
 
-### Standard (full PCR + Scope PCR)
+### Standard (full report + Scope Commitment)
 
 Criteria: multiple files or a schema change.
 
-All phases use their full templates. Traceability IDs required. Output Scope PCR at end of PLAN. Output full Delivery PCR at end of DELIVER.
+All phases use their full templates. Traceability IDs required. Output Scope Commitment at end of PLAN. Output full Delivery Report at end of DELIVER.
 
-### Complex (full PCR + detailed evidence + Scope PCR)
+### Complex (full report + detailed evidence + Scope Commitment)
 
 Criteria: architectural changes, multi-service, or high risk.
 
-All phases use their full templates with extra detail. Traceability IDs required. Output Scope PCR at end of PLAN. Output full Delivery PCR with expanded evidence at end of DELIVER.
+All phases use their full templates with extra detail. Traceability IDs required. Output Scope Commitment at end of PLAN. Output full Delivery Report with expanded evidence at end of DELIVER.
 
 ---
 
@@ -192,13 +192,13 @@ All phases use their full templates with extra detail. Traceability IDs required
    - Note: Skill invocations should be delegated to subagents when possible; the main agent orchestrates the chain.
 8. **TodoWrite Sync** (recommended): Sync implementation steps to the platform's native `TodoWrite` tool for real-time visibility. Each IMPL-XXX becomes a TodoWrite item with pending → in_progress → completed status transitions.
 9. Fill out the implementation plan template and present.
-10. **Output Scope PCR** (Standard/Complex only) — after the plan is approved, output a Scope PCR block committing to the approach, fallback, scope boundaries, and step count. This becomes the contract that the delivery PCR will measure against. See SKILL.md for the Scope PCR format.
+10. **Output Scope Commitment** (Standard/Complex only) — after the plan is approved, output a Scope Commitment block committing to the approach, fallback, scope boundaries, and step count. This becomes the contract that the delivery report will measure against. See SKILL.md for the Scope Commitment format.
 
 **Artifact**: `procedure/templates/implementation-plan.md`
 
-**Exit criteria**: Every requirement maps to at least one step. Every step has a Traceability ID. Verification strategy covers all edge cases. Fallback approach defined. Scope PCR output (Standard/Complex).
+**Exit criteria**: Every requirement maps to at least one step. Every step has a Traceability ID. Verification strategy covers all edge cases. Fallback approach defined. Scope Commitment output (Standard/Complex).
 
-**Gate**: PLAN → IMPLEMENT — Scope PCR must be output for Standard/Complex tasks. Simple tasks scope internally.
+**Gate**: PLAN → IMPLEMENT — Scope Commitment must be output for Standard/Complex tasks. Simple tasks scope internally.
 
 **Transition**: On acceptance → IMPLEMENT. On revision → update and re-present.
 
@@ -217,7 +217,7 @@ All phases use their full templates with extra detail. Traceability IDs required
    c. Follow constraints from `constraints/code-standards.md` and `constraints/type-safety.md` (coding tasks).
    d. If new dependency needed, install it before writing code that uses it.
    e. Update TodoWrite item status if syncing (pending → in_progress → completed).
-   f. **Track deviations** — if implementation diverges from plan, note the deviation and justification for the PCR Deviations field.
+   f. **Track deviations** — if implementation diverges from plan, note the deviation and justification for the report Deviations field.
 2. If the plan includes a Skill Chain, execute each skill invocation in order, passing intermediate artifacts between skills.
 3. Self-review using the Review Checklist in the verification report template.
 4. Fix issues found during self-review before transitioning.
@@ -226,7 +226,7 @@ All phases use their full templates with extra detail. Traceability IDs required
 
 **Exit criteria**: All steps completed. Self-review passes with no unresolved issues.
 
-**Gate**: IMPLEMENT → VERIFY — self-review checklist must pass and all IMPL steps must be done. Track deviations (times implementation diverged from plan) for the PCR Deviations field.
+**Gate**: IMPLEMENT → VERIFY — self-review checklist must pass and all IMPL steps must be done. Track deviations (times implementation diverged from plan) for the report Deviations field.
 
 **Transition**: On completion → VERIFY. On error → classify as code bug or approach failure (see Adaptive Pivot Protocol), follow appropriate recovery path.
 
@@ -288,7 +288,7 @@ All phases use their full templates with extra detail. Traceability IDs required
 5. Note any dependencies added.
 6. Present verification report summary.
 7. State caveats or follow-up items.
-8. Output **Delivery PCR** — use the compact format for Simple tasks, full format for Standard/Complex (see PCR v2 in SKILL.md). Include DELTA Scope (comparison against Scope PCR) and PIVOT (if approach changed) fields.
+8. Output **Delivery Report** — use the compact format for Simple tasks, full format for Standard/Complex (see Delivery Reports in SKILL.md). Include Scope Drift (comparison against Scope Commitment) and Pivot (if approach changed) fields.
 9. **Completion signal**: For web development tasks (Type 3 / Coding), call `Complete(project_type="web_dev", summary="...")`. For non-coding tasks, present the output file path directly.
 
 **Artifacts**: None new. Consumes verification report. Writes to `memory/YYYY-MM-DD.md` Session Digest.
@@ -308,11 +308,11 @@ Before attempting any fix, classify the error:
 | Fix requires rewriting 50%+ of implementation | Approach Failure | Re-enter PLAN with fallback |
 | Same error recurs after 2 fix attempts | Approach Failure | Stop fixing, re-evaluate approach |
 | Fix requires changing data model / API contract | Approach Failure | Re-enter PLAN |
-| Required library/framework feature doesn't exist | Approach Failure | Pivot to Scope PCR fallback or new approach |
+| Required library/framework feature doesn't exist | Approach Failure | Pivot to Scope Commitment fallback or new approach |
 | Typo, wrong variable, missing null check | Code Bug | Fix → VERIFY |
 | Type mismatch, import error, lint violation | Code Bug | Fix → VERIFY |
 
-**Pivot flow**: Error → classify → if Approach Failure: evaluate alternatives (Scope PCR fallback first), present pivot to user, re-enter PLAN with new approach, re-implement, re-verify. Record in PIVOT field of delivery PCR.
+**Pivot flow**: Error → classify → if Approach Failure: evaluate alternatives (Scope Commitment fallback first), present pivot to user, re-enter PLAN with new approach, re-implement, re-verify. Record in Pivot field of delivery report.
 
 ### Incident Protocol
 

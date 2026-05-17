@@ -40,7 +40,7 @@ Copy and complete the following when an error is encountered:
 |-------|-------|
 | Is Approach Failure? | YES / NO |
 | Pivot Signal | [Which signal triggered this: 50%+ rewrite / same error after 2 attempts / missing library feature / data model change / N/A] |
-| Fallback Available? | YES / NO — if YES, reference the Scope PCR's Fallback Approach |
+| Fallback Available? | YES / NO — if YES, reference the Scope Commitment's Fallback Approach |
 | Fallback Viable? | [Is the fallback still viable given what was learned from the failure?]
 | New Approach | [Describe the alternative approach — either the fallback or a new one] |
 | User Approval Required? | YES / NO |
@@ -75,7 +75,7 @@ If Approach Failure is YES, stop fixing the current approach and follow the pivo
 | **Phase When Error Occurred** | The phase that was active when the error was detected. This determines the return target after the fix. |
 | **Error Message** | Paste the exact error text. Do not summarize or paraphrase — the exact wording often contains diagnostic clues. |
 | **Error Classification** | Use the categories from the error resolution decision tree (`procedure/decision-trees/error-resolution.md`). **Approach Failure** is for cases where the fundamental design/approach is wrong, not just a code bug. This classification triggers the Adaptive Pivot Protocol instead of the normal fix-verify cycle. |
-| **Pivot Assessment** | REQUIRED when error classification is Approach Failure. If Code Bug, write N/A. Documents the alternative approach considered and the pivot rationale. References the Scope PCR's Fallback Approach when available. |
+| **Pivot Assessment** | REQUIRED when error classification is Approach Failure. If Code Bug, write N/A. Documents the alternative approach considered and the pivot rationale. References the Scope Commitment's Fallback Approach when available. |
 | **Context** | What was the agent doing? Which Traceability ID was being implemented? What command was running? |
 | **Root Cause Analysis** | The "Why did it fail?" question should go at least two levels deep. "The function threw because `x` was undefined" is level one. "The function threw because `x` was undefined because the database query returns null for new users" is level two. |
 | **Side Effects** | A side effect is any change that goes beyond fixing the error itself. This includes: deleting files, modifying configuration, changing behavior in unrelated code, dropping database data, or altering git history. If any side effect exists, user approval is required before proceeding. |
